@@ -8,6 +8,7 @@ Vue.use(Router)
 Vue.use(Vant);
 
 const Home = r => require.ensure([], () => r(require('../components/home/index')), 'index')
+const Login = r => require.ensure([], () => r(require('../components/home/login')), 'index')
 
 const Forgetpass = r => require.ensure([], () => r(require('../components/home/forgetpass')), 'index')
 const Index = r => require.ensure([], () => r(require('../components/index')), 'index')
@@ -241,6 +242,14 @@ const router= new Router({
     component: Systemsetup,
     meta: {
       title: '系统设置'
+    },
+  },
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login,
+    meta: {
+      title: '登入'
     },
   },
   

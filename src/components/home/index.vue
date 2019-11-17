@@ -372,7 +372,7 @@ export default {
                 if(that.styleArr[res.data.smUserinfo.custStyle].isShow == 4){
                   that.styleShow = true
                 }
-                that.$store.dispatch('backgroundBotm', res.data.smUserinfo.custStyle); 
+                that.$store.dispatch('backgroundBotm', Number(res.data.smUserinfo.custStyle)); 
                 }else{
                    that.custStyle = that.styleArr[0].styleObj
                 }

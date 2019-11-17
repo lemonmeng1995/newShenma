@@ -142,6 +142,7 @@ export default {
   name: "freecreation",
   data() {
     return {
+      dataObj:null,
       formData: {
         name: "",
         mobile: "",
@@ -185,6 +186,70 @@ export default {
       },
        isLoading:false, //每次上传的lodaing
     };
+  },
+  created(){
+    if(localStorage.getItem('customerNo')){
+      let datas={
+      customerNo: localStorage.getItem('customerNo') 
+      }
+        let that = this
+      $.ajax({
+            type : "post",
+            url : `${baseUrl}/smUserinfo/detailUserInfo`,  //POST /smDynamic/deleteDynamic
+            dataType: "json",
+            data:datas, //请求php的参数名
+            ContentType: 'application/json',
+            success : function(res) {          
+              if (res.errCode == "0000") { 
+                console.log("res,11111111",res)  
+                that.dataObj = res.data 
+                that.formData.name =  res.data.name
+                that.formData.password =  res.data.password
+                that.formData.phoneNum =  res.data.phoneNum
+                that.formData.weChatNo =  res.data.weChatNo
+                that.formData.email =  res.data.email
+                that.formData.wechatCodeId =  res.data.wechatCodeId
+                that.formData.headId =  res.data.headId
+                let obj = {};
+                obj.url = res.data.headId;
+                 that.headIdArr[0] = obj;
+                let weobj={}
+                 weobj.url = res.data.wechatCodeId;
+                 that.wechatCodeIdArr[0] = weobj;
+                 if( res.data.companyName ){
+                     that.formData.companyName =  res.data.companyName
+
+                 }
+                  if( res.data.tel ){
+                     that.formData.tel =  res.data.tel
+
+                 }
+                  if( res.data.expertise ){
+                     that.formData.expertise =  res.data.expertise
+
+                 }
+                  if( res.data.companyAddress ){
+                     that.formData.companyAddress =  res.data.companyAddress
+
+                 }
+                  if( res.data.job ){
+                     that.formData.job =  res.data.job
+
+                 }
+                    if( res.data.bagMusicId ){
+                     that.formData.bagMusicId =  res.data.bagMusicId
+
+                 }
+             //多个视频跟图片
+          
+                                                      
+             }
+            }
+        });
+
+
+    }
+
   },
   methods: {
     //验证邮箱
@@ -285,6 +350,12 @@ export default {
       this.fetch(url, formData, "post").then(res => {
         if (res.errCode == "0000") {
           this.formData.wechatCodeId = res.data.filePath;
+           let obj = {};
+          obj.url = res.data.filePath;
+          console.log("obj,", obj);
+
+   
+          this.wechatCodeIdArr[0] = obj;
              setTimeout(()=>{
                     this.isLoading = false 
                   },300);
@@ -502,7 +573,9 @@ export default {
       .xingx-box {
             display: flex;
             border-bottom: 3px solid #eee;
-            margin: 0 20px;
+            margin:40px 20px;
+            box-shadow: 0px 0px 17px 0px rgba(208, 208, 207, 1);
+            border-radius: 10px;
             .van-uploader {
                 padding: 40px 20px 20px 30px;
                 /deep/ .van-uploader__wrapper {
@@ -584,6 +657,8 @@ export default {
       display: flex;
       border-bottom: 3px solid #eee;
       margin: 0 20px;
+      box-shadow: 0px 0px 17px 0px rgba(208, 208, 207, 1);
+      border-radius: 10px;
       .van-uploader {
         padding: 40px 20px 20px 30px;
         /deep/ .van-uploader__wrapper {

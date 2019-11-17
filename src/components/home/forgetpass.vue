@@ -1,7 +1,8 @@
 <template>
 <div class="forgetpass">
    <GlobaHeader :text="text" />
-    <div class="catrelease-title">手机号码*</div>
+   <div class="context-box">
+        <div class="catrelease-title">手机号码*</div>
     <van-field v-model="phoneNum" placeholder="请输入手机号码" />
      <div class="catrelease-title">验证码*</div>
     <van-field v-model="password" placeholder="请输入验证码" />
@@ -10,6 +11,8 @@
       <span v-else @click="sendMsg">获取验证码</span>
       </div>
     <div class="sumcode" @click="onSubmit">提交验证码</div>
+   </div>
+ 
 </div>  
 
 </template>
@@ -70,7 +73,9 @@ export default {
 
 <style scoped lang="scss">
 .forgetpass{
-      margin: 30px 26px 120px 26px;
+    .context-box{
+        margin: 30px 26px 120px 26px;
+    }
   .catrelease-title {
     padding: 20px;
     font-size: 28px;

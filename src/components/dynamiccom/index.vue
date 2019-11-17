@@ -2,17 +2,11 @@
 <div id="dynamiccom">
     <GlobaHeader :text="text" />
     <van-search v-model="value" placeholder="请输入搜索关键词" show-action shape="round" @search="onSearch"></van-search>
-    <div class="Vanswipe">
+    <div class="Vanswipe" v-show="dataBanner.length>0">
       <van-swipe :autoplay="3000" indicator-color="white">
          <van-swipe-item v-for="(item,index) in dataBanner" :key="index">
-          <img :src="item.bannerImgUrl" alt />
+            <van-image fit="contain" :src="item.bannerUrl"/>
         </van-swipe-item>
-        <!-- <van-swipe-item>
-          <img :src="images.vanswipe" alt />
-        </van-swipe-item>
-        <van-swipe-item>
-          <img :src="images.vanswipe" alt />
-        </van-swipe-item> -->
       </van-swipe>
     </div>
     <div class="allTitle">
@@ -20,38 +14,24 @@
             <p :class="activeIndex == 'all'?'allTitle-tit active':'allTitle-tit'"  @click="getDatatype(null,'all')">全部</p>
             <p class="allTitle-line" v-if="activeIndex == 'all'"></p>
         </div>
-        <div class="allTitle-box"  v-if="List.length!=0" v-for="(item,index) in List" :key="index">
+        <div class="allTitle-box"  v-show="List.length > 0" v-for="(item,index) in List" :key="index">
             <p :class="activeIndex == index?'allTitle-tit active':'allTitle-tit'"  @click="getDatatype(item.dynamicTypeId,index)">{{item.dynamicTypeName}}</p>
             <p class="allTitle-line" v-if="activeIndex == index"></p>
         </div>
-        <!-- <div class="allTitle-box">
-            <p class="allTitle-tit">火爆款</p>
-        </div> -->
     </div>
-    <div class="detail">
-        <div class="detail-box" v-if="dataSource" 
+    <div class="detail" v-if="dataSource.length>0" >
+        <div class="detail-box" 
       v-for="(item,index) in dataSource"  :key="index">
             <p class="detail-box-title">{{item.dynamicTitle }}</p>
             <p class="detail-box-des" v-html="item.content" ></p>
             <img  :src="item.coverImgId"/>
             <p class="detail-box-time">  {{$RegExp.getNowTime(item.insertTime)}}发布</p>
         </div>
-        <div v-if="!dataSource" >
-           暂无数据
-        </div>
-
-          <!-- <div class="detail-box">
-            <p class="detail-box-title">火爆龙虾</p>
-            <p class="detail-box-des">很好吃</p>
-            <img  :src="images.vanswipe"/>
-            <p class="detail-box-time">  2019-10-01 04:38:28发布</p>
-        </div> -->
-        
-
     </div>
-
+    <div v-else>
+      <van-image width="10rem" height="10rem" fit="contain" :src="images.zhanwei" />
+    </div>
 </div>
-  
 </template>
 
 <script>
@@ -66,6 +46,7 @@ export default {
              value:"",
             images: {
                 vanswipe: require("../../assets/product/vanswipe.png"),
+                 zhanwei:require("../../assets/zhanwei.png")
             },
             dataBanner:[],
             dataSource:null,
@@ -84,8 +65,7 @@ export default {
             dataType: "json",
             data:datas, //请求php的参数名
             ContentType: 'application/json',
-            success : function(res) {  
-                console.log("数据源",res )         
+            success : function(res) {        
                if(res.errCode ="0000"){
                  that.dataSource = res.data   
                }
@@ -99,7 +79,6 @@ export default {
             data: datas, //请求php的参数名
             ContentType: 'application/json',
             success : function(res) {  
-                console.log("res",res)      
                if(res.errCode ="0000"){
                    that.dataBanner = res.data                           
                }
@@ -112,7 +91,6 @@ export default {
             data: datas, //请求php的参数名
             ContentType: 'application/json',
             success : function(res) {  
-                console.log("res",res)      
                if(res.errCode ="0000"){
                  that.List = res.data                              
                }
@@ -127,7 +105,6 @@ export default {
             }else{
                 this.activeIndex = index
             }
-            console.log("shui谁，", this.activeIndex)
           
         let linCus = localStorage.getItem('customerNo')?localStorage.getItem('customerNo'): 11139
         let datas={

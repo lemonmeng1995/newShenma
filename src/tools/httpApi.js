@@ -21,6 +21,7 @@ const test = '/';
     indexsmUser:test+'smUserinfo/indexInfo',          //  POST /首页
     fileUploadImg:test+'fileUpload/fileImg',             //上传图片，视频，音频
     updateUserInfo:test+'smUserinfo/updateUserInfo',      //编辑用户信息
+    addIntroduce:test + 'smIntroduce/addIntroduce',                        //新增简介
 
 }
 

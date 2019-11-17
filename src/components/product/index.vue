@@ -2,17 +2,11 @@
   <div id="product">
     <GlobaHeader :text="text" />
     <van-search v-model="value" placeholder="请输入搜索关键词" show-action shape="round" @search="onSearch"></van-search>
-    <div class="Vanswipe">
+    <div class="Vanswipe" v-show="dataBanner.length>0">
       <van-swipe :autoplay="3000" indicator-color="white">
         <van-swipe-item v-for="(item,index) in dataBanner" :key="index">
-          <img :src="item.bannerUrl" alt />
+                  <van-image fit="contain" :src="item.bannerUrl"/>
         </van-swipe-item>
-        <!-- <van-swipe-item>
-          <img :src="images.vanswipe" alt />
-        </van-swipe-item>
-        <van-swipe-item>
-          <img :src="images.vanswipe" alt />
-        </van-swipe-item> -->
       </van-swipe>
     </div>
     <div class="banlan">
@@ -20,32 +14,31 @@
          <div class="img-box" @click="getDatatype()"><img :src="images.all" /></div>
         <span>全部</span>
       </div>
-      <div class="banlan-all" v-for="(itype,indextype) in dataType" :key="indextype">
+      <div class="banlan-all" v-show="dataType.length>0"  v-for="(itype,indextype) in dataType" :key="indextype">
         <div class="img-box"  @click="getDatatype(itype.productTypeId)"><img :src="itype.productTypeImgId" /></div>
         <span>{{itype.productTypeName}}</span>
       </div>
-      <!-- <div class="banlan-all">
-        <img :src="images.foods" />
-        <span>食物</span>
-      </div> -->
     </div>
     <div class="titlesorting">
-      <div class="moren" @click="getAll()">
+      <div 
+      :class="isdecshow == 0?'moren':'moren nomoren'"
+        @click="getAll">
         <span>默认</span>
-        <img :src="images.arrowO" />
+        <img :src="isdecshow == 0?images.arrowO:images.arrow" />
       </div>
-      <div class="moren nomoren">
+      <div  @click="getTime"
+        :class="isdecshow == 1?'moren':'moren nomoren'">
         <span>时间</span>
-        <img :src="images.arrow" />
+        <img  :src="isdecshow == 1?images.arrowO:images.arrow"/>
       </div>
-      <div class="moren nomoren">
+      <div  @click="getXiao" :class="isdecshow == 2?'moren':'moren nomoren'">
         <span>销售</span>
-        <img :src="images.arrow" />
+        <img :src="isdecshow == 2?images.arrowO:images.arrow"/>
       </div>
     </div>
-    <div class="showall">
+    <div class="showall"  v-if="dataSource.length>0">
       <p class="showall-title">全部</p>
-      <div class="showall-context"  @click="goTopaoducdatail(item.productId)"  v-if="dataSource.length>0"  
+      <div class="showall-context"  @click="goTopaoducdatail(item.productId)"   
         v-for="(item,index) in dataSource" :key="index">
         <img :src="item.productImgId" />
         <div class="showall-title-right">
@@ -57,19 +50,10 @@
           <p>浏览量10</p>
         </div>
       </div>
-
-      <!-- <div class="showall-context">
-        <img :src="images.xiaolongx" />
-        <div class="showall-title-right">
-          <p class="right-text">小龙虾</p>
-          <p class="right-price">￥40</p>
-        </div>
-        <div class="showall-arrow">
-          <img :src="images.rightarr" />
-          <p>浏览量 10</p>
-        </div>
-      </div> -->
       <p class='noproduct'>已展示全部产品</p>
+    </div>
+    <div v-else>
+        <van-image width="10rem" height="10rem" fit="contain" :src="images.zhanwei" />
     </div>
   </div>
 </template>
@@ -84,6 +68,7 @@ export default {
     return {
       text: "产品",
       value: "",
+      isdecshow:0, //排序
       images: {
         vanswipe: require("../../assets/product/vanswipe.png"),
         all: require("../../assets/product/all.png"),
@@ -91,7 +76,8 @@ export default {
         arrowO: require("../../assets/product/arrowO.png"),
         arrow: require("../../assets/product/arrow.png"),
         xiaolongx: require("../../assets/product/xiaolongx.png"),
-        rightarr: require("../../assets/product/rightarr.png")
+        rightarr: require("../../assets/product/rightarr.png"),
+        zhanwei:require("../../assets/zhanwei.png")
       },
       dataBanner:[],
       dataType:[],
@@ -105,7 +91,6 @@ export default {
     }
        this.fetch("/smProductBanner/selectSmProductBanner", datas, "get").then(res => {
              if(res.errCode ="0000"){
-                 console.log("res999，",res.data)
                  if(res.data.length>0){
                      this.dataBanner = res.data
 
@@ -151,6 +136,72 @@ export default {
 
   },
   methods: {
+    getAll(){
+      this.isdecshow = 0
+        let linCus = localStorage.getItem('customerNo')?localStorage.getItem('customerNo'): 11139
+        let data={custNo : linCus,orderBy:0 }
+        if(this.value){
+          data.searchTxt = this.value
+        }
+        let that = this
+      $.ajax({
+            type : "post",
+            url : `${baseUrl}/smProduct/selectSmProductByWhere`,
+            dataType: "json",
+            data:data, //请求php的参数名
+            ContentType: 'application/json',
+            success : function(res) {                 
+               if(res.errCode ="0000"){
+                 that.dataSource = res.data   
+               }
+            }
+        });
+
+    },
+    getTime(){
+      this.isdecshow = 1
+           let linCus = localStorage.getItem('customerNo')?localStorage.getItem('customerNo'): 11139
+        let data={custNo : linCus,orderBy:1 }
+        if(this.value){
+          data.searchTxt = this.value
+        }
+        let that = this
+      $.ajax({
+            type : "post",
+            url : `${baseUrl}/smProduct/selectSmProductByWhere`,
+            dataType: "json",
+            data:data, //请求php的参数名
+            ContentType: 'application/json',
+            success : function(res) {                 
+               if(res.errCode ="0000"){
+                 that.dataSource = res.data   
+               }
+            }
+        });
+
+    },
+      getXiao(){
+      this.isdecshow = 2
+           let linCus = localStorage.getItem('customerNo')?localStorage.getItem('customerNo'): 11139
+        let data={custNo : linCus,orderBy:2 }
+        if(this.value){
+          data.searchTxt = this.value
+        }
+        let that = this
+      $.ajax({
+            type : "post",
+            url : `${baseUrl}/smProduct/selectSmProductByWhere`,
+            dataType: "json",
+            data:data, //请求php的参数名
+            ContentType: 'application/json',
+            success : function(res) {                 
+               if(res.errCode ="0000"){
+                 that.dataSource = res.data   
+               }
+            }
+        });
+
+    },
     onSearch() {
         let linCus = localStorage.getItem('customerNo')?localStorage.getItem('customerNo'): 11139
         let data={custNo : linCus,searchTxt:this.value }

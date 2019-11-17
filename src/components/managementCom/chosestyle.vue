@@ -10,7 +10,7 @@
           <img :src="images.blue"  @click="getChose"/>
           <img :src="images.zise"  @click="getChose"/> -->
           <div class="httpMask" 
-            v-show="isShow == item.isShow"  @click="getChose(item,index)">       
+            v-if="isShow == item.isShow"  @click="getChose(item,index)">       
               <!-- <van-icon name="success" /> -->
                 <!-- <img clss="menban" :src="images.menban"/> -->
               <img :src="images.gougou"/>
@@ -124,6 +124,8 @@ export default {
        if(this.backgroundbotm){
          console.log("已有选择得。",this.backgroundbotm)
          this.isShow = this.backgroundbotm
+       }else{
+          this.isShow = 0
        }
 
      },
