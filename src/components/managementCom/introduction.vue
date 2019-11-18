@@ -60,6 +60,28 @@ export default {
 
         }
     },
+    created(){
+  
+    let datas={customerNo:localStorage.getItem('customerNo')}
+    let that = this
+      $.ajax({
+            type : "post",
+            url :  `${baseUrl}/smIntroduce/detailUserInfo`,
+            dataType: "json",
+            data:datas, //请求php的参数名
+            ContentType: 'application/json',
+            success : function(res) {  
+              console.log("res",res)    
+               if(res.errCode ="0000"){
+              
+              
+               }else{
+                   that.$toast(res.errMsg)
+
+               }
+            }
+        });
+    },
     methods:{
          //删除图片
     delImg(detail,index) {

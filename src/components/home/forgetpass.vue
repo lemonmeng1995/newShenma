@@ -5,9 +5,9 @@
         <div class="catrelease-title">手机号码*</div>
     <van-field v-model="phoneNum" placeholder="请输入手机号码" />
      <div class="catrelease-title">验证码*</div>
-    <van-field v-model="password" placeholder="请输入验证码" />
+    <van-field v-model="code" placeholder="请输入验证码" />
     <div class="yanzhnegm">
-      <span v-if="disabled">{{code}}</span>
+      <span v-if="disabled">{{time}}</span>
       <span v-else @click="sendMsg">获取验证码</span>
       </div>
     <div class="sumcode" @click="onSubmit">提交验证码</div>
@@ -19,6 +19,7 @@
 
 <script>
 import GlobaHeader from "../globalcom/globaHeader";
+import { baseUrl } from "@/tools/httpApi";
 export default {
     name:"forgetpass",
     components:{GlobaHeader},
@@ -34,36 +35,91 @@ export default {
     },
     methods:{
          sendMsg(){
-            if (!this.$RegExp.phone(this.phone)) {
+            if (!this.$RegExp.phone(this.phoneNum)) {
                 this.$notify("手机号错误，重新输入")          
             }else{
-                this.fetch(this.apis.sendMsg,{phone:this.phone},'post').then(res=>{
-                if(res.code==200){
-                    if(res.data.status){                   
-                        let timer = setInterval(() => {
-                            if (this.time > 0 ) {
-                                this.time--;
-                                 this.disabled = true;
+                   let datas={phoneNum:this.phoneNum}
+    let that = this
+      $.ajax({
+            type : "post",
+            url :  `${baseUrl}/smUserinfo/getCode`,
+            dataType: "json",
+            data:datas, //请求php的参数名
+            ContentType: 'application/json',
+            success : function(res) {      
+               if(res.errCode ="0000"){
+                //  that.$toast(res.errMsg)
+                let timer = setInterval(() => {
+                    if (that.time > 0 ) {
+                                that.time--;
+                                 that.disabled = true;
                                 // this.btnText = '重新发送(' + this.time + ')';
                             }else{
                                 clearInterval(timer)
-                                 this.disabled = false;
+                                 that.disabled = false;
                                 // this.btnText = '发验证码';
-                                this.time = 60;
-                                this.disabled = false;
+                                that.time = 60;
+                                that.disabled = false;
                             }
                         }, 1000)
-                        this.$notify({ type: 'success', message: res.data.msg||res.data.message });
-                    }else{
-                        this.$notify(res.data.msg||res.data.message)
-                    }
-                }else{
-                    this.$notify(res.message)
-                }
-            })
+               }else{
+                   that.$toast(res.errMsg)
+
+               }
+            }
+        });
+            //     this.fetch(this.apis.sendMsg,{phone:this.phone},'post').then(res=>{
+            //     if(res.code==200){
+            //         if(res.data.status){                   
+            //             let timer = setInterval(() => {
+            //                 if (this.time > 0 ) {
+            //                     this.time--;
+            //                      this.disabled = true;
+            //                     // this.btnText = '重新发送(' + this.time + ')';
+            //                 }else{
+            //                     clearInterval(timer)
+            //                      this.disabled = false;
+            //                     // this.btnText = '发验证码';
+            //                     this.time = 60;
+            //                     this.disabled = false;
+            //                 }
+            //             }, 1000)
+            //             this.$notify({ type: 'success', message: res.data.msg||res.data.message });
+            //         }else{
+            //             this.$notify(res.data.msg||res.data.message)
+            //         }
+            //     }else{
+            //         this.$notify(res.message)
+            //     }
+            // })
             }
         },
-        onSubmit(){
+           onSubmit(){
+                             let datas={phoneNum:this.phoneNum,code:this.code}
+    let that = this
+      $.ajax({
+            type : "post",
+            url :  `${baseUrl}/smUserinfo/vailCode`,
+            dataType: "json",
+            data:datas, //请求php的参数名
+            ContentType: 'application/json',
+            success : function(res) {      
+               if(res.errCode ="0000"){
+                //  that.$toast(res.errMsg)
+                // this.$router.push("/login")
+                 that.$router.push({
+                     name:'Login',
+                     query:{
+                         phoneNum:that.phoneNum
+                     }
+                 })
+              
+               }else{
+                   that.$toast(res.errMsg)
+
+               }
+            }
+        });
 
         },
     }

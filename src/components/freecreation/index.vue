@@ -185,10 +185,21 @@ export default {
         mucs:require("../../assets/creact/mucs.png"),
       },
        isLoading:false, //每次上传的lodaing
+       isHave:false,
     };
   },
+  //  beforeRouteEnter(to, from, next) {
+  //  next(vm=>{ 
+  //    console.log("vm,",vm)         //  这里的vm指的就是vue实例，可以用来当做this使用
+  //     if(from.fullPath == "/manhome"){
+  //       vm.isHave = true
+  //     }
+  //   })
+  // },
   created(){
-    if(localStorage.getItem('customerNo')){
+    console.log("2222,",window.location.href, this.$RegExp.getQueryString("state"))
+   
+    if(localStorage.getItem('customerNo') && this.$RegExp.getQueryString("state")== 1){
       let datas={
       customerNo: localStorage.getItem('customerNo') 
       }
@@ -202,7 +213,7 @@ export default {
             success : function(res) {          
               if (res.errCode == "0000") { 
                 console.log("res,11111111",res)  
-                that.dataObj = res.data 
+                let dataObj = res.data 
                 that.formData.name =  res.data.name
                 that.formData.password =  res.data.password
                 that.formData.phoneNum =  res.data.phoneNum
@@ -241,7 +252,35 @@ export default {
 
                  }
              //多个视频跟图片
-          
+               let linarr = []
+      let linObj = {}
+      if(dataObj.imgId &&  dataObj.imgUrlList){
+          dataObj.imgUrlList.forEach((ii,dd) => {
+         that.imgIdArrFile.push({url:ii})
+      })
+            linarr = dataObj.imgId.split(",")
+       linarr.forEach((aa,bb) => {
+         dataObj.imgUrlList.forEach((cc,dd) => {
+           if(bb == dd){
+               that.imgIdArr.push({url:cc,id:aa})
+           }
+         })
+       })
+      }
+       console.log("图片，，，", that.imgIdArrFile, that.imgIdArr)
+       if(dataObj.videoId && dataObj.videoUrlList){
+            let linvideoId= dataObj.videoId.split(",")
+        dataObj.videoUrlList.length>0 &&  dataObj.videoUrlList.forEach((qq,ww) => {
+          linvideoId.forEach((cc,pp)=> {
+            if(ww == pp){
+                that.videoArr.push({
+                  url:qq,
+                  id:cc,
+                });
+            }
+          })
+        })
+       }
                                                       
              }
             }
@@ -474,11 +513,6 @@ export default {
       } else if (!this.formData.wechatCodeId) {
         this.$notify("微信二维码必传");
       } else {
-
-    
-
-
-
         console.log("this.formData", this.formData, Object.keys(this.formData));
         let datas = {};
         Object.keys(this.formData).forEach((item, index) => {
@@ -506,19 +540,37 @@ export default {
         });
         datas.imgId = imgidStrArr.join(",");
         datas.videoId = videoArrLin.join(",");
-
-        this.fetch(this.apis.useradduser, datas, "post").then(res => {
+          let url;
+      
+        if(this.$RegExp.getQueryString("state")== 1){
+          datas.customerNo = localStorage.getItem('customerNo')
+           url = this.apis.updateUserInfo
+        }else{
+            url = this.apis.useradduser
+        }
+        this.fetch(url, datas, "post").then(res => {
           console.log("res1,", res);
           if (res.errCode == "0000") {
             this.$toast("保存成功");
-            localStorage.setItem("customerNo", res.custNo);
+           
             //  this.$router.push("/home")
-            this.$router.push({
+             if(this.$RegExp.getQueryString("state")== 1){
+          this.$router.push({
+              name: "Home",
+              query: {
+                customerNo:localStorage.getItem('customerNo') 
+              }
+            });
+        }else{
+           localStorage.setItem("customerNo", res.custNo);
+             this.$router.push({
               name: "Home",
               query: {
                 customerNo: res.custNo
               }
             });
+        }
+          
             console.log("123,", res.custNo);
           } else {
             this.$toast(res.errMsg);

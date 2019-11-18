@@ -15,6 +15,7 @@
 
 <script>
 import GlobaHeader from "../globalcom/globaHeader";
+import { baseUrl } from "@/tools/httpApi";
 export default {
     name:'briefintroduction',
     components:{GlobaHeader},
@@ -29,7 +30,26 @@ export default {
     },
     create(){
         console.log("进来简介了。。。。")
+  
+    let datas={customerNo:localStorage.getItem('customerNo')}
+    let that = this
+      $.ajax({
+            type : "post",
+            url :  `${baseUrl}/smIntroduce/detailUserInfo`,
+            dataType: "json",
+            data:datas, //请求php的参数名
+            ContentType: 'application/json',
+            success : function(res) {  
+              console.log("res",res)    
+               if(res.errCode ="0000"){
+              
+              
+               }else{
+                   that.$toast(res.errMsg)
 
+               }
+            }
+        });
     }
 
 }

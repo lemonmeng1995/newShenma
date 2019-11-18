@@ -15,6 +15,7 @@
 
 <script>
 import GlobaHeader from "../globalcom/globaHeader";
+import { baseUrl } from "@/tools/httpApi";
 export default {
     name:"forgetpass",
     components:{GlobaHeader},
@@ -28,9 +29,39 @@ export default {
               disabled:false,
         }
     },
+    created(){
+      if(this.$route.query.phoneNum){
+        this.phoneNum = this.$route.query.phoneNum
+      }
+    },
     methods:{
         onSubmit(){
+             let datas={phoneNum:this.phoneNum,password:this.password}
+    let that = this
+      $.ajax({
+            type : "post",
+            url :  `${baseUrl}/smUserinfo/updatePassword`,
+            dataType: "json",
+            data:datas, //请求php的参数名
+            ContentType: 'application/json',
+            success : function(res) {      
+               if(res.errCode ="0000"){
+                //  that.$toast(res.errMsg)
+                // this.$router.push("/login")
+             
+                //  this.$router.push({
+                //      name:'Home',
+                //      query:{
+                //          phoneNum:that.phoneNum
+                //      }
+                //  })
+              
+               }else{
+                   that.$toast(res.errMsg)
 
+               }
+            }
+        });
         },
     }
 
