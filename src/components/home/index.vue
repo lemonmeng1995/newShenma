@@ -469,7 +469,7 @@ export default {
     //获取二维码 保存
     getQucode(){
       this.showqrCode = true
-      let shareUrl = "http://www.shenmaguanggao.top/card"
+      let shareUrl = "http://www.shenmaguanggao.top"
       //  let shareUrl = "http://192.168.2.108:8080"
       console.log("123,", document.getElementById("qrcode"))
       document.getElementById("qrcode").innerHTML = "";
@@ -1099,7 +1099,7 @@ border-bottom:2px solid rgba(90,90,90,1);
     .alert_bg{
       position: absolute;
       display: flex;
-       margin-bottom: 120px;
+      margin-bottom: 120px;
     
       bottom: 0;
       width:100%;
@@ -1114,12 +1114,12 @@ border-bottom:2px solid rgba(90,90,90,1);
       }
       .qrCode{
         position: absolute;
-        bottom: 70px;
+        bottom: 40px;
         background: white;
       }
     }
     .alert_close{
-        margin-top: 30px;
+        margin-top: 10px;
         width: 100%;
         text-align: center;
         position: absolute;
@@ -1130,12 +1130,13 @@ border-bottom:2px solid rgba(90,90,90,1);
           font-size: 30px;
           font-weight: 600;
           text-align: center;
+          top: -20px;
         }
         .van-icon{
           font-size: 50px;
           right: 30px;
           position: absolute;
-          top: -14px;
+          top: -20px;
         }
         img{
           width: 64px;

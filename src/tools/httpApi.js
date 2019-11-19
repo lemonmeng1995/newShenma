@@ -22,6 +22,8 @@ const test = '/';
     fileUploadImg:test+'fileUpload/fileImg',             //上传图片，视频，音频
     updateUserInfo:test+'smUserinfo/updateUserInfo',      //编辑用户信息
     addIntroduce:test + 'smIntroduce/addIntroduce',                        //新增简介
+    updateIntroduce:test + 'smIntroduce/updateIntroduce',      //编辑简介
+   
 
 }
 

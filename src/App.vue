@@ -13,10 +13,10 @@
        <router-link  :to="{path:'/freecreation'}" >
           <img class= "freecreation" :src="images.freecreation" alt="" >
        </router-link>        
-       <router-link :to="{ name: 'Dynamiccom'}">
+       <router-link :to="{ path: '/dynamiccom'}">
           <img :src="images.dynamiccom" alt="" >
        </router-link>         
-       <router-link :to="{ name: 'Briefintroduction'}">
+       <router-link :to="{ path: '/briefintroduction'}">
           <img :src="images.briefintroduction" alt="" >
        </router-link>
       </div>

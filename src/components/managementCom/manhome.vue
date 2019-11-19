@@ -315,7 +315,7 @@ export default {
       }
       .qrCode{
         position: absolute;
-        bottom: 70px;
+        bottom: 40px;
         background: white;
       }
     }

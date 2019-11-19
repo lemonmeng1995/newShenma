@@ -8,7 +8,6 @@
     <van-field v-model="password" type="password" placeholder="请输入密码" />
     <div class="sumcode" @click="onSubmit">保存</div>
    </div>
- 
 </div>  
 
 </template>
@@ -30,13 +29,13 @@ export default {
         }
     },
     created(){
-      if(this.$route.query.phoneNum){
-        this.phoneNum = this.$route.query.phoneNum
+      if(this.$route.query.phoneNum || localStorage.getItem('phoneNumUser')){
+        this.phoneNum = this.$route.query.phoneNum|| localStorage.getItem('phoneNumUser')
       }
     },
     methods:{
         onSubmit(){
-             let datas={phoneNum:this.phoneNum,password:this.password}
+    let datas={phoneNum:this.phoneNum ,password:this.password}
     let that = this
       $.ajax({
             type : "post",
@@ -45,20 +44,10 @@ export default {
             data:datas, //请求php的参数名
             ContentType: 'application/json',
             success : function(res) {      
-               if(res.errCode ="0000"){
-                //  that.$toast(res.errMsg)
-                // this.$router.push("/login")
-             
-                //  this.$router.push({
-                //      name:'Home',
-                //      query:{
-                //          phoneNum:that.phoneNum
-                //      }
-                //  })
-              
+               if(res.errCode ="0000"){         
+                 that.$router.push("/home")            
                }else{
                    that.$toast(res.errMsg)
-
                }
             }
         });

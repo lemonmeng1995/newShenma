@@ -95,7 +95,7 @@ export default {
             }
         },
            onSubmit(){
-                             let datas={phoneNum:this.phoneNum,code:this.code}
+    let datas={phoneNum:this.phoneNum,code:this.code}
     let that = this
       $.ajax({
             type : "post",
@@ -107,6 +107,7 @@ export default {
                if(res.errCode ="0000"){
                 //  that.$toast(res.errMsg)
                 // this.$router.push("/login")
+                 localStorage.setItem('customerNo',res.custNo);
                  that.$router.push({
                      name:'Login',
                      query:{

@@ -17,7 +17,6 @@
         </div>
       </div>
     </div>
-
     <div class="context">
       <div class="onmusic">
           <img :src="images.uppicet" />
@@ -53,6 +52,7 @@ export default {
           imgIdArrFile: [], //上传图片绑定的数据
           isLoading:false,
           richText :"",    //副文本框
+          isEdie:false,   //是编辑还是新增
           images: {
             vidoe: require("../../assets/creact/vidoe.png"),
             uppicet: require("../../assets/creact/uppicet.png"),
@@ -72,9 +72,46 @@ export default {
             ContentType: 'application/json',
             success : function(res) {  
               console.log("res",res)    
-               if(res.errCode ="0000"){
-              
-              
+               if(res.errCode ="0000"){ 
+                 if(res.data){
+                   that.isEdie = true
+
+                    
+                 that.introduceTitle = res.data.introduceTitle
+          that.$store.dispatch('getDroductDescribe', res.data.richText);
+          if(res.data.videoId && res.data.videoUrlList){
+          let linvideoId= res.data.videoId.split(",")
+        res.data.videoUrlList.length>0 && res.data.videoUrlList.forEach((qq,ww) => {
+          linvideoId.forEach((cc,pp)=> {
+            if(ww == pp){
+                that.videoArr.push({
+                  url:qq,
+                  id:cc,
+                });
+            }
+          })
+        })
+       }
+
+      let linarr = []
+      let linObj = {}
+      if(res.data.imgId &&  res.data.imgUrlList){
+          res.data.imgUrlList.forEach((ii,dd) => {
+         that.imgIdArrFile.push({url:ii})
+      })
+       linarr = res.data.imgId.split(",")
+       linarr.forEach((aa,bb) => {
+         res.data.imgUrlList.forEach((cc,dd) => {
+           if(bb == dd){
+               that.imgIdArr.push({url:cc,id:aa})
+           }
+         })
+       })
+      }
+ }   
+
+
+
                }else{
                    that.$toast(res.errMsg)
 
@@ -162,9 +199,9 @@ export default {
       }else{
           let datas={
             introduceTitle:this.introduceTitle,
-             
+            customerNo:localStorage.getItem('customerNo'),
       }
-           let imgidString = "";
+        let imgidString = "";
         let imgidStrArr = [];
         let videoArrLin = [];
         if( this.imgIdArr.length>0  ){
@@ -182,14 +219,20 @@ export default {
          if(this.$refs.vueHtml.content){
        datas.richText = this.$refs.vueHtml.content
     }
+    let url;
+    if(this.isEdie){
+      url = this.apis.updateIntroduce
+
+    }else{
+        url =  this.apis.addIntroduce
+    }
  
         console.log("提交，0",datas)
-          this.fetch(this.apis.addIntroduce, datas, "post").then(res => {
+          this.fetch(url, datas, "post").then(res => {
             console.log("res,",res)
             if(res.errCode == "0000"){
               this.$toast("保存成功")
               this.$router.go(-1)
-
             }
           })
 
