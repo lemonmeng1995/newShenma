@@ -174,6 +174,8 @@ export default {
                }
             }
         });
+    }else{
+       this.$store.dispatch('getDroductDescribe', "");
     }
 
   },

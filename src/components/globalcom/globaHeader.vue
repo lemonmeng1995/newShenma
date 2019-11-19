@@ -3,7 +3,7 @@
     <!-- <span  class="fanhui">  <img :src="images.fanhui" /></span> -->
      <img  class="fanhui"  :src="images.fanhui" @click="goBack"/>
      <span>{{text}}</span>
-     <img class="tel" :src="images.tel" @click="callPhone(localStorage.getItem('phoneNumUser'))"/>
+     <img class="tel" :src="images.tel" @click="callPhone()"/>
 </div>
   
 </template>
@@ -15,6 +15,7 @@ export default {
     props:["text"],
     data(){
         return{
+           
             images:{
                 fanhui:require("../../assets/product/fanhui.png"),
                 tel:require("../../assets/product/tel.png"),
@@ -85,8 +86,8 @@ export default {
     },
     methods:{
                //拨号
-    callPhone (phoneNumber) {
-    window.location.href = 'tel://' + phoneNumber
+    callPhone () {
+    window.location.href = 'tel://' + localStorage.getItem('phoneNumUser')
 },
         goBack(){
               this.$router.go(-1);

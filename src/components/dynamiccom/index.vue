@@ -5,7 +5,7 @@
     <div class="Vanswipe" v-show="dataBanner.length>0">
       <van-swipe :autoplay="3000" indicator-color="white">
          <van-swipe-item v-for="(item,index) in dataBanner" :key="index">
-            <van-image fit="contain" :src="item.bannerUrl"/>
+            <van-image fit="contain" :src="item.bannerImgUrl"/>
         </van-swipe-item>
       </van-swipe>
     </div>

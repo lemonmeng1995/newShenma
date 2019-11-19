@@ -2,6 +2,7 @@
 <div id="briefintroduction">
     <GlobaHeader :text="text" />
     <p class="briefint-title">个人简历</p>
+    <div v-if="introduceTitle">
     <p class="briefint-des">{{introduceTitle}}</p>
     <p class="briefint-text">
          {{richText}}     
@@ -12,6 +13,11 @@
     <div class="uploadMP4-box" v-for="(item,index) in videoArr" :key="index">
           <video class="videoclass" :src="item.url" controls="controls"></video>
     </div>
+    </div>
+    <div v-else>
+        <van-image width="10rem" height="10rem" fit="contain" :src="images.zhanwei" />
+    </div>
+    
   
 </div>
   
@@ -31,7 +37,8 @@ export default {
              imgIdArrFile:[],
              videoArr:[],
              images:{
-                  vanswipe: require("../../assets/product/vanswipe.png")
+                  vanswipe: require("../../assets/product/vanswipe.png"),
+                  zhanwei:require("../../assets/zhanwei.png")
              }
 
         }

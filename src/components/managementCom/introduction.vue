@@ -192,6 +192,11 @@ export default {
                     this.isLoading = false 
                   },300);
     },
+    
+destroyed() {
+  console.log("我销毁了，，，")
+  this.$store.dispatch('getDroductDescribe', "");
+},
     onSubmit(){
       console.log("提交，",this.introduceTitle)
       if(!this.introduceTitle ){
