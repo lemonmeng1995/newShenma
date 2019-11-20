@@ -14,11 +14,9 @@
           <video class="videoclass" :src="item.url" controls="controls"></video>
     </div>
     </div>
-    <div v-else>
-        <van-image width="10rem" height="10rem" fit="contain" :src="images.zhanwei" />
+    <div v-else class="zhanweitu">
+        <van-image  fit="contain" :src="images.zhanwei" />
     </div>
-    
-  
 </div>
   
 </template>
@@ -96,6 +94,12 @@ export default {
 <style lang="scss" scoped>
 #briefintroduction{
     margin-bottom: 120px;
+     .zhanweitu{
+    text-align: center;
+    margin:auto;
+    top: 50%;position: absolute;left: 50%; transform: translate(-50%,-50%);
+  
+  }
     .briefint-title{
         font-size:50px;
         font-family:FZDaHei-B02S;

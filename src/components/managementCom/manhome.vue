@@ -1,6 +1,7 @@
 <template>
   <div id="manhome">
     <div class="manhome-box">
+      <p class="manhome-headertitle">后台管理</p>
       <p class="manhome-userid">ID：{{smUserinfo.customerNo}}</p>
       <div class="manhome-context">
         <div class="context-top">
@@ -19,7 +20,7 @@
           <img @click="showCard" class="top-card" :src="images.card" />
         </div>
         <div class="context-bom">
-          <p>智想版:2019-10-08到期</p>
+          <p>智享版:2019-10-08到期</p>
           <img :src="images.code"  @click="getQucode"/>
         </div>
         <div class="compon-name">{{smUserinfo.companyName}}</div>
@@ -159,9 +160,17 @@ export default {
 #manhome {
   margin-bottom: 120px;
   .manhome-box {
-    height: 326px;
+    height: 426px;
     background: rgba(9, 178, 255, 1);
     border: 0px solid rgba(0, 0, 0, 1);
+    .manhome-headertitle{
+      text-align: center;
+      padding-top:20px;
+      font-size:35px;
+      font-family:Droid Sans Fallback;
+      font-weight:bold;
+      color:rgba(255,255,255,1);
+    }
     .manhome-userid {
       font-size: 28px;
       font-family: Droid Sans Fallback;
@@ -275,7 +284,7 @@ export default {
   }
   .man-cell {
     background: #eee;
-    padding-top: 110px;
+    padding-top: 90px;
     padding-bottom: 40px;
     .van-cell {
       margin: 10px 0;

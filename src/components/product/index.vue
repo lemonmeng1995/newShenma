@@ -52,8 +52,8 @@
       </div>
       <p class='noproduct'>已展示全部产品</p>
     </div>
-    <div v-else>
-        <van-image width="10rem" height="10rem" fit="contain" :src="images.zhanwei" />
+    <div v-else class="zhanweitu">
+        <van-image  fit="contain" :src="images.zhanwei" />
     </div>
   </div>
 </template>
@@ -265,6 +265,15 @@ export default {
 <style lang="scss" scoped>
 #product {
   margin-bottom: 120px;
+  .zhanweitu{
+    text-align: center;
+    top: 50%;position: absolute;left: 50%; transform: translate(-50%,-50%);
+
+    .van-image{
+      // width:50%;
+      margin-top:40%;
+    }
+  }
   .Vanswipe {
     margin: 25px;
     .van-swipe {

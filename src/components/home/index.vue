@@ -18,21 +18,28 @@
     </div>
     <div
       class="topHome"
-      :style="{backgroundImage: 'url(' + dataSource.smUserinfo.headId + ')', backgroundSize:'cover',
      
-      }"
+      :style="!styleShow?{backgroundImage: 'url(' + dataSource.smUserinfo.headId + ')', backgroundSize:'cover',
+     
+      } : ''"
     >
      <div v-if="styleShow" class="stylewuwu">
       
         <!-- <div class="touximage" :style="{background:custStyle.backgroundCir}">
            <van-image :src="dataSource.smUserinfo.headId" round fit="cover"/>
         </div> -->
+         <van-image
+              fit="contain"
+              :src="dataSource.smUserinfo.headId"
+            />
         <div class="stylewuwu-info" :style="{background:custStyle.backgroundHeader}">
+          <!-- <img   :src="custStyle.backgroundHeader"/> -->
+         
             <h3>{{dataSource.smUserinfo.companyName }}</h3>
             <div class="info-box">
-                  <span class="nameZ">{{dataSource.smUserinfo.name }}</span>
+            <span class="nameZ">{{dataSource.smUserinfo.name }}</span>
             <span>{{dataSource.smUserinfo.job }}</span>
-            <span>{{dataSource.smUserinfo.phoneNum }}</span>
+            <span @click="callPhone(dataSource.smUserinfo.phoneNum)">{{dataSource.smUserinfo.phoneNum }}</span>
             </div>
          
         </div>
@@ -65,7 +72,7 @@
 
         <p class="nameZ">{{dataSource.smUserinfo.name }}</p>
         <p>{{dataSource.smUserinfo.job }}</p>
-        <p>{{dataSource.smUserinfo.phoneNum }}</p>
+        <p @click="callPhone(dataSource.smUserinfo.phoneNum)">{{dataSource.smUserinfo.phoneNum }}</p>
         <div class="xiangmessage" :style="{background:custStyle.firstbox}">
           <div class="xiangmessage-top">
             <p class="xiangmessage-top-left">
@@ -146,13 +153,16 @@
     <div class="conImage" :style="{background:custStyle.backgroundTab}">
       <div class="conImage-box" >
         <div v-if="dataSource.imgList && dataSource.imgList.length>0">
-             <div  v-for="(item,index) in dataSource.imgList" :key="index">
-             <!-- <van-image fit="contain" :src="item" /> -->
-               <img :src="item"  v-lazy="item" >
+             <!-- <div > -->
+             <van-image fit="contain"  v-for="(item,index) in dataSource.imgList" :key="index" :src="item" />
+               <!-- <img :src="item"  v-lazy="item" > -->
              <!-- <lazy-component>
                <img :src="item"  v-lazy="img" >
             </lazy-component> -->
-            </div>
+            <!-- </div> -->
+              <div class="uploadMP4-box" v-for="(item,index) in dataSource.videoList" :key="index">
+                <video class="videoclass" :src="item" controls="controls"></video>
+              </div>
             <img class="sig-banner" :src="image.bannar" />
         </div>
      
@@ -365,14 +375,17 @@ export default {
             ContentType: 'application/json',
             success : function(res) {      
                if(res.errCode ="0000"){
-                 that.dataSource = res.data   
+                 that.dataSource = res.data  
+                 localStorage.setItem('phoneNumUser',res.data.smUserinfo.phoneNum) 
                  console.log("数据源", that.dataSource ) 
+
                 if(res.data.smUserinfo.custStyle){
-                       that.custStyle = that.styleArr[res.data.smUserinfo.custStyle].styleObj
-                if(that.styleArr[res.data.smUserinfo.custStyle].isShow == 4){
+                  let isStyle = res.data.smUserinfo.custStyle?res.data.smUserinfo.custStyle:4
+                       that.custStyle = that.styleArr[isStyle].styleObj
+                if(that.styleArr[isStyle].isShow == 4){
                   that.styleShow = true
                 }
-                that.$store.dispatch('backgroundBotm', Number(res.data.smUserinfo.custStyle)); 
+                that.$store.dispatch('backgroundBotm', Number(isStyle)); 
                 }else{
                    that.custStyle = that.styleArr[0].styleObj
                 }
@@ -384,7 +397,6 @@ export default {
   methods: {
         //验证手机
     handleInput(e) {
-        console.log("e验证手机,",e, this.$RegExp.setOnlyNunber(e))
       this.phoneNumUser = this.$RegExp.setOnlyNunber(e);
     },
     gerenErweima(url){
@@ -397,11 +409,7 @@ export default {
     getinformaCode(){
         this.showqrCode = true
          document.getElementById("qrcode").innerHTML = "";
-         let string = this.dataSource.smUserinfo.name.split("")
-         
-         console.log("this.dataSource.smUserinfo.name.split",
-         this.dataSource.smUserinfo.name.slice(1,this.dataSource.smUserinfo.name.length))
-
+         let string = this.dataSource.smUserinfo.name.split("")      
         var a, b = this.dataSource.smUserinfo.name.split("")[0],
        c =  this.dataSource.smUserinfo.name.slice(1,this.dataSource.smUserinfo.name.length),
        d = this.dataSource.smUserinfo.companyName,
@@ -629,6 +637,7 @@ export default {
     position: absolute;
     left: 24px;
     top: 25px;
+    z-index:2;
     img {
       width: 72px;
       height: 73px;
@@ -677,6 +686,7 @@ export default {
     position: absolute;
     right: 30px;
     top: 25px;
+    z-index:2;
     img {
       width: 72px;
       height: 73px;
@@ -688,10 +698,19 @@ export default {
     // background:rgba(108,108,1,0.8);
     // background-color: #d9d9d9;
     .stylewuwu{
-        padding-top:600px;
+        // padding-top:600px;
       .stylewuwu-info{
         padding:20px;
         line-height:70px;
+        height:160px;
+        margin-top:-200px;
+        position:absolute;
+        width:710px;
+        .van-image{
+          position:absolute;
+          width:100%;
+          height:100%;
+        }
         h3{
           font-size:45px;
           font-family:Droid Sans Fallback;
@@ -1049,12 +1068,25 @@ border-bottom:2px solid rgba(90,90,90,1);
         width: 100%;
         height: 100%;
       }
+       .van-image:not(:first-child) {
+      margin-top:-5px;
+      }
+      .uploadMP4-box{
+        // margin:0 20px;
+        overflow: hidden;
+        margin-top:-5px;
+        .videoclass{
+            width: 100%;
+            margin-top:-5px;
+            // height: 400px;
+        }
+    }
     }
   }
   .sig-banner {
     height: 249px;
     width:100%;
-    // margin:20px;
+    margin-top:-5px;
   }
   .joinman {
     width: 100%;

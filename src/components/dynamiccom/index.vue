@@ -28,8 +28,8 @@
             <p class="detail-box-time">  {{$RegExp.getNowTime(item.insertTime)}}发布</p>
         </div>
     </div>
-    <div v-else>
-      <van-image width="10rem" height="10rem" fit="contain" :src="images.zhanwei" />
+     <div v-else class="zhanweitu">
+        <van-image  fit="contain" :src="images.zhanwei" />
     </div>
 </div>
 </template>
@@ -154,6 +154,11 @@ export default {
 <style lang="scss" scoped>
 #dynamiccom{
   margin-bottom: 120px;
+   .zhanweitu{
+    text-align: center;
+        top: 50%;position: absolute;left: 50%; transform: translate(-50%,-50%);
+
+  }
   .Vanswipe {
     margin: 25px;
     .van-swipe {
