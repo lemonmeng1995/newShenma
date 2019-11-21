@@ -36,7 +36,7 @@ export default {
         menban:require("../../assets/chostyle/menban.png"),
         gougou:require("../../assets/chostyle/gougou.png"),
       },
-      isShow:0,
+      isShow:4,
       imagesArr:[
         {imgUrl: require("../../assets/chostyle/fff.png"),isShow:0},
         {imgUrl: require("../../assets/chostyle/blue.png"),isShow:1},
@@ -169,7 +169,7 @@ export default {
       overflow: hidden;
   
     .img-sigle{
-
+      position: relative;
       height:385px;
       width:45%;
       margin:15px;
@@ -185,7 +185,9 @@ export default {
      width:223px;
      height:388px;
      text-align: center;
-     margin:-390px 15px 15px 45px;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
     background-color: rgba(0,0,0,.7);
     align-items: center;
     justify-content: center;

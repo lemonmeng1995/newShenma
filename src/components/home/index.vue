@@ -29,7 +29,7 @@
            <van-image :src="dataSource.smUserinfo.headId" round fit="cover"/>
         </div> -->
          <van-image
-              fit="contain"
+              fit="fill"
               :src="dataSource.smUserinfo.headId"
             />
         <div class="stylewuwu-info" :style="{background:custStyle.backgroundHeader}">
@@ -646,6 +646,7 @@ export default {
   .home-morecai {
     position: absolute;
     text-align: center;
+    z-index:2;
     left: 24px;
     top: 25px;
     width: 74px;
@@ -693,12 +694,22 @@ export default {
     }
   }
   .topHome {
+    
     // display: none;
     // opacity:0.6;
     // background:rgba(108,108,1,0.8);
     // background-color: #d9d9d9;
     .stylewuwu{
         // padding-top:600px;
+      .van-image{
+          // position:absolute;、
+          width:100%;
+          min-height: 720px;
+          // height:100%;
+          /deep/ .van-image__img, .van-image__loading{
+              min-height: 720px  !important; 
+          }
+      }
       .stylewuwu-info{
         padding:20px;
         line-height:70px;
@@ -706,11 +717,7 @@ export default {
         margin-top:-200px;
         position:absolute;
         width:710px;
-        .van-image{
-          position:absolute;
-          width:100%;
-          height:100%;
-        }
+      
         h3{
           font-size:45px;
           font-family:Droid Sans Fallback;

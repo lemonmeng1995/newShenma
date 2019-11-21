@@ -24,7 +24,8 @@
       v-for="(item,index) in dataSource"  :key="index">
             <p class="detail-box-title">{{item.dynamicTitle }}</p>
             <p class="detail-box-des" v-html="item.content" ></p>
-            <img  :src="item.coverImgId"/>
+             <van-image fit="contain" :src="item.coverImgId" />
+            <!-- <img  :src="item.coverImgId"/> -->
             <p class="detail-box-time">  {{$RegExp.getNowTime(item.insertTime)}}发布</p>
         </div>
     </div>

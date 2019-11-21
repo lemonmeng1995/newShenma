@@ -15,10 +15,14 @@
           </p>
         <!-- <p class="text-img"   :style="{backgroundImage: 'url(' + images.xiaolongx + ')', backgroundSize:'cover'}"></p> -->
            <!-- <van-image :src="images.xiaolongx"   fit="scale-down"/> -->
-        <img v-if="dataList.imgUrlList"  v-for="(item,index) in dataList.imgUrlList" :key="index" :src="item" />
+           <div class="imagevan">
+              <van-image fit="contain"  v-if="dataList.imgUrlList"  v-for="(item,index) in dataList.imgUrlList" :key="index" :src="item" />
+           </div>
+      
+        <!-- <img v-if="dataList.imgUrlList"  v-for="(item,index) in dataList.imgUrlList" :key="index" :src="item" /> -->
          <!-- <img v-if="dataList.imgUrlList"  v-for="(item,index) in dataList.imgUrlList" :key="index" :src="item" /> -->
           <div class="uploadMP4" v-if="dataList.videoUrlList>0">
-        <div class="uploadMP4-box" v-for="(item,index) in dataList.videoUrlList" :key="index">
+          <div class="uploadMP4-box" v-for="(item,index) in dataList.videoUrlList" :key="index">
           <video class="videoclass" :src="item" controls="controls"></video>
         </div>
       </div>
@@ -141,6 +145,13 @@ overflow: hidden;
         //   background: url('./assets/product/xiaolongx.png') center top no-repeat
 
       }
+      .imagevan{
+        font-size: 0;
+       .van-image{
+            margin:0 20px;
+          }
+      }
+    
      img{
           height:351px;
           width:710px;
