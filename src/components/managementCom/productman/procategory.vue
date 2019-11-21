@@ -147,6 +147,7 @@ export default {
       .text {
         flex: 1;
         line-height: 120px;
+        overflow: hidden;white-space: nowrap;text-overflow: ellipsis;
         .text-onen {
           font-size: 24px;
           font-family: Droid Sans Fallback;

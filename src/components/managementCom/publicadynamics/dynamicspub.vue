@@ -27,7 +27,7 @@
       <div class="context">
       <div class="onmusic">
         <!-- <van-uploader :after-read="afterRead"> -->
-          <img :src="images.uppicet" />
+          <!-- <img :src="images.uppicet" /> -->
         <!-- </van-uploader> -->
         <span>内容图片</span>
       </div>
@@ -455,7 +455,7 @@ export default {
       }
       span {
         margin-left: 20px;
-        font-size: 21px;
+        font-size: 31px;
         line-height: 100px;
         font-family: Droid Sans Fallback;
         font-weight: 400;

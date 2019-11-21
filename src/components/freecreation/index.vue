@@ -41,11 +41,11 @@
                     >
                     </van-uploader>
                     <div class="xingx-box-right">
-                    <!-- <van-uploader                        
-                        :after-read="afterReadheadId"
-                    > -->
-                      <img :src="images.selexingx" />
-                    <!-- </van-uploader> -->
+                   
+                      <!-- <img :src="images.selexingx" /> -->
+                    <p class="uploadtitle">
+                      上传形象照
+                    </p>
                         <span>(注：头像尺寸建议为正方形）</span>
                     </div>
                 </div>
@@ -55,11 +55,11 @@
                         <img :src="images.addimg" />
                     </van-uploader>
                     <div class="xingx-box-right">
-                           <!-- <van-uploader   :max-count="1"
-                        :after-read="afterwechatId"
-                    > -->
-                      <img :src="images.weiximage" />
-                    <!-- </van-uploader> -->
+                          <p class="uploadtitle">
+                      上传微信二维码
+                    </p>
+                      <!-- <img :src="images.weiximage" /> -->
+                 
                         <span>（注：个人微信二维码)</span>
                     </div>
                 </div>
@@ -114,7 +114,7 @@
     <div class="context">
       <div class="onmusic">
         <!-- <van-uploader :after-read="afterRead"> -->
-          <img :src="images.uppicet" />
+          <!-- <img :src="images.uppicet" /> -->
         <!-- </van-uploader> -->
         <span>内容图片</span>
       </div>
@@ -126,7 +126,7 @@
       />
     </div>
     <div class="onBaocun" @click="getSubmit">
-      <p>下一步</p>
+      <p>保  存</p>
     </div>
 
     
@@ -655,6 +655,10 @@ export default {
                             margin: 40px 0px;
                             display: block;
                         }
+                        .uploadtitle{
+                          font-size: 32px;
+                          margin:40px 20px;
+                        }
                 .van-uploader{
                     display: block;
                     height:150px;
@@ -924,7 +928,7 @@ export default {
       }
       span {
         margin-left: 20px;
-        font-size: 21px;
+        font-size: 31px;
         line-height: 100px;
         font-family: Droid Sans Fallback;
         font-weight: 400;

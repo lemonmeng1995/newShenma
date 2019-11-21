@@ -2,8 +2,8 @@
   <div id="productdetails">
     <GlobaHeader :text="text" />
     <div class="context-banban">
-          <!-- <van-image :src="images.xiaolongx"   fit="contain"/> -->
-      <img :src="dataList.productImgId?dataList.productImgId:dataList.coverImgId" />
+          <van-image  :src="dataList.productImgId?dataList.productImgId:dataList.coverImgId"   fit="contain"/>
+      <!-- <img :src="dataList.productImgId?dataList.productImgId:dataList.coverImgId" /> -->
       <p class="context-banban-text">{{dataList.productName?dataList.productName:dataList.dynamicTitle }}</p>
       <p class="context-banban-price" v-if="this.$route.query.productId">￥ {{dataList.productPrice}}</p>
     </div>
@@ -87,11 +87,11 @@ export default {
 #productdetails {
     margin-bottom: 120px;
   .context-banban {
-    // .van-image{
-    //   width: 576px;
-    //   height: 694px;
-    //   margin: 87px;
-    // }
+    .van-image{
+      // width: 576px;
+      // height: 694px;
+      margin: 80px;
+    }
        img{
       width: 576px;
       height: 694px;

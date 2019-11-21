@@ -115,6 +115,7 @@ export default {
         margin:0 20px 0 20px;
 background:rgba(241,241,241,1);
 border-radius:5px;
+padding-left:20px;
 
 font-size:40px;
 font-family:Droid Sans Fallback;

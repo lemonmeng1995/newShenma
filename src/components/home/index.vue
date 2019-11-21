@@ -19,8 +19,8 @@
     <div
       class="topHome"
      
-      :style="!styleShow?{backgroundImage: 'url(' + dataSource.smUserinfo.headId + ')', backgroundSize:'cover',
-     
+      :style="!styleShow?{backgroundImage: 'url(' + dataSource.smUserinfo.headId + ')' , backgroundSize:'cover',
+       backgroundPosition: '50px 0px',
       } : ''"
     >
      <div v-if="styleShow" class="stylewuwu">
@@ -58,7 +58,7 @@
           </div>
           <div v-if="dataSource.smUserinfo.companyAddress" class="xiangmessage-bom">
             <img :src="image.dingwei" />
-            <span>{{dataSource.smUserinfo.companyAddress }}【点击查看地图】</span>
+            <span>{{dataSource.smUserinfo.companyAddress }}</span>
           </div>
         </div>
 
@@ -86,7 +86,7 @@
           </div>
           <div v-if="dataSource.smUserinfo.companyAddress" class="xiangmessage-bom">
             <img :src="image.dingwei" />
-            <span>{{dataSource.smUserinfo.companyAddress }}【点击查看地图】</span>
+            <span>{{dataSource.smUserinfo.companyAddress }}</span>
           </div>
         </div>
       </div>
@@ -171,10 +171,9 @@
 
     <div class="joinman" :style="{background:custStyle.backgroundCir || custStyle.firstbox}"> 
       <p class="joinman-name" @click="getLogin">进入名片管理中心</p>
-      <p class="joinman-image" > 
-         <!-- <img  :src="image.erweima"/> -->
+      <!-- <p class="joinman-image" > 
          <img  :src="image.xuanfu"/>
-      </p>
+      </p> -->
     </div>
     <!-- //二维码的容器 -->
     <!-- <van-popup v-show="showqrCode">
@@ -700,6 +699,7 @@ export default {
     // background:rgba(108,108,1,0.8);
     // background-color: #d9d9d9;
     .stylewuwu{
+      font-size:0;
         // padding-top:600px;
       .van-image{
           // position:absolute;、
@@ -772,17 +772,23 @@ export default {
             }
           }
           .xiangmessage-top-right {
+            position: relative;
             img {
               width: 28px;
               height: 33px;
-              margin-top: 10px;
+              // margin-top: 10px;
+               top: 50%;
+              position: absolute;
+              // left: 50%; 
+              transform: translate(-50%,-50%)
             }
             span {
-              margin-left: 15px;
+              margin-left: 25px;
               font-size: 28px;
               font-family: Droid Sans Fallback;
               font-weight: 400;
               color: rgba(255, 255, 255, 1);
+            
               // margin-top:-10px;
             }
           }
@@ -887,18 +893,24 @@ export default {
             }
           }
           .xiangmessage-top-right {
+            position: relative;
             img {
               width: 28px;
               height: 33px;
-              margin-top: 10px;
+              // margin-top: 10px;
+              top: 50%;
+              position: absolute;
+              // left: 50%; 
+              transform: translate(-50%,-50%)
+              // margin-top:-10px;
             }
             span {
-              margin-left: 15px;
+              margin-left: 25px;
               font-size: 28px;
               font-family: Droid Sans Fallback;
               font-weight: 400;
               color: rgba(255, 255, 255, 1);
-              // margin-top:-10px;
+             
             }
           }
         }
@@ -968,7 +980,7 @@ padding:0 20px 10px 20px;
 font-family:Droid Sans Fallback;
 font-weight:400;
 color:rgba(90,90,90,1);
-border-bottom:2px solid rgba(90,90,90,1);
+// border-bottom:2px solid rgba(90,90,90,1);
       }
       .erweimaclas{
          width:40px;
@@ -981,7 +993,7 @@ border-bottom:2px solid rgba(90,90,90,1);
 font-family:Droid Sans Fallback;
 font-weight:400;
 color:rgba(90,90,90,1);
-border-bottom:2px solid rgba(90,90,90,1);
+// border-bottom:2px solid rgba(90,90,90,1);
 
       }
 
