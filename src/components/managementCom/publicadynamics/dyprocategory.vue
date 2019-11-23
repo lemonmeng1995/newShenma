@@ -7,6 +7,13 @@
       </div>
     </div>
     <div class="procategory-context">
+      <div class="context-box" >
+        <div class="text">
+          <span class="text-onen">0</span>
+          <span class="text-onet">默认</span>
+        </div>
+      </div>
+
       <div class="context-box" v-if="List.length>0" v-for="(item,index) in List" :key="index">
         <div class="text">
           <span class="text-onen">{{item.dynamicTypeSort}}</span>

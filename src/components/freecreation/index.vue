@@ -868,14 +868,20 @@ export default {
       width: 100%;
       .uploadMP4-box {
         width: 100%;
+        position: relative;
         .videoclass {
           width: 100%;
           height: 400px;
         }
         .van-icon {
+          margin-top:20px;
+          background-color: aliceblue;
           font-size: 40px;
           position: absolute;
-          right: 60px;
+          right: 30px;
+          border-radius: 50%;
+          color: #eee;
+          border: 1px solid #eee;
         }
       }
     }

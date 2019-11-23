@@ -31,13 +31,14 @@ export default {
   name: 'App',
   data(){
     return{
-      images:{
-        briefintroduction:require("../src/assets/chostyle/briefintroduction.png"),
-        dynamiccom:require("../src/assets/chostyle/product1.png"),
-        freecreation:require("../src/assets/chostyle/freecreation.png"),
-        product1:require("../src/assets/chostyle/product1.png"),
-        businesscard:require("../src/assets/chostyle/businesscard.png"),
-      },
+      images:{},
+      // images:{
+      //   briefintroduction:require("../src/assets/chostyle/briefintroduction.png"),
+      //   dynamiccom:require("../src/assets/chostyle/product1.png"),
+      //   freecreation:require("../src/assets/chostyle/freecreation.png"),
+      //   product1:require("../src/assets/chostyle/product1.png"),
+      //   businesscard:require("../src/assets/chostyle/businesscard.png"),
+      // },
          styleArr:[
             {isShow:0,styleObj:{
           backgroundHeader:'rgba(60,60,60,0.6)',

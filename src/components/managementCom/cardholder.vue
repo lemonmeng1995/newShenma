@@ -14,6 +14,9 @@
               <a href="" @click="callPhone(item.phoneNum)">{{item.phoneNum}}</a>
             </div>
           </div>
+          <div class="del" @click="del()">
+            删除
+          </div>
         </div>
         <div class="list-bottom">
           <div>{{item.companyName}}</div>
@@ -74,7 +77,36 @@ export default {
     };
   },
   created(){
-      let that = this
+    this.getData()
+    
+
+  },
+  methods:{
+    //删除名片夹功能
+    del(id){
+      //  POST /smCard/deleteSmCard
+        let that = this
+      let datas={cardId:id}
+
+      $.ajax({
+            type : "post",
+            url : `${baseUrl}/smCard/deleteSmCard`,
+            dataType: "json",
+            data:datas, //请求php的参数名
+            ContentType: 'application/json',
+            success : function(res) {   
+              console.log("res",res)   
+               if(res.errCode ="0000"){
+                 that.getData()   
+                 this.$toast("删除成功")              
+               }
+            }
+        });
+
+    },
+    //获取数据源
+    getData(){
+        let that = this
       let datas={customerNo:localStorage.getItem('customerNo')}
 
       $.ajax({
@@ -91,8 +123,7 @@ export default {
             }
         });
 
-  },
-  methods:{
+    },
            //拨号
     callPhone (phoneNumber) {
     window.location.href = 'tel://' + phoneNumber
@@ -127,6 +158,7 @@ getTohome(id){
         border-radius:7px;
       .list-top {
           display: flex;
+          position: relative;
         .top-img {
           width: 190px;
           height: 190px;
@@ -174,6 +206,13 @@ color:rgba(18,150,219,1);
 
             }
           }
+        }
+        .del{
+          position:absolute;
+          right:20px;
+          top:20px;
+          text-align: right;
+
         }
       }
       .list-bottom {

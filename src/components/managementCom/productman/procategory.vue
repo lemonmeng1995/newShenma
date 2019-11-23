@@ -7,12 +7,19 @@
       </div>
     </div>
     <div class="procategory-context"> 
-      <div class="context-box" v-for="(item,index) in dataList" :key="index">
+       <div class="context-box">
+        <div class="text">
+          <span class="text-onen">0</span>
+          <span class="text-onet">默认</span>
+        </div>
+       </div>
+
+      <div class="context-box" v-for="(item,index) in dataList" :key="index" v-if="item.productTypeName != '默认'">
         <div class="text">
           <span class="text-onen">{{item.productTypeSort}}</span>
           <span class="text-onet">{{item.productTypeName}}</span>
         </div>
-        <div class="icon">
+        <div class="icon" >
           <img :src="images.bianji" @click="edia(item)"/>
           <img :src="images.shanchu" @click="dele(item.productTypeId)"/>
         </div>

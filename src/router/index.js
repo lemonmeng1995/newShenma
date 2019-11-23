@@ -15,6 +15,9 @@ const Index = r => require.ensure([], () => r(require('../components/index')), '
 
 const Briefintroduction = r => require.ensure([], () => r(require('../components/briefintroduction/index')), 'index') //简介
 const Dynamiccom = r => require.ensure([], () => r(require('../components/dynamiccom/index')), 'index')  //动态
+
+const Dynamidetail = r => require.ensure([], () => r(require('../components/dynamiccom/dynamidetail')), 'index')  //动态
+
 const Freecreation = r => require.ensure([], () => r(require('../components/freecreation/index')), 'index') //免费创建
 
 const Product = r => require.ensure([], () => r(require('../components/product/index')), 'index') // 产品
@@ -104,6 +107,14 @@ const router= new Router({
       component: Dynamiccom,
       meta: {
         title: '动态'
+      }
+    },
+    {
+      path: '/dynamidetail',
+      name: 'Dynamidetail',
+      component: Dynamidetail,
+      meta: {
+        title: '动态详情'
       }
     },
     {

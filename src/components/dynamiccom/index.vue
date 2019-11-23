@@ -2,6 +2,7 @@
 <div id="dynamiccom">
     <GlobaHeader :text="text" />
     <van-search v-model="value" placeholder="请输入搜索关键词" show-action shape="round" @search="onSearch"></van-search>
+    <div v-if="dataBanner.length>0 || dataSource.length>0 || List.length>0">
     <div class="Vanswipe" v-show="dataBanner.length>0">
       <van-swipe :autoplay="3000" indicator-color="white">
          <van-swipe-item v-for="(item,index) in dataBanner" :key="index">
@@ -14,20 +15,26 @@
             <p :class="activeIndex == 'all'?'allTitle-tit active':'allTitle-tit'"  @click="getDatatype(null,'all')">全部</p>
             <p class="allTitle-line" v-if="activeIndex == 'all'"></p>
         </div>
-        <div class="allTitle-box"  v-show="List.length > 0" v-for="(item,index) in List" :key="index">
+        <div class="allTitle-box"  v-show="List.length > 0" v-for="(item,index) in List" :key="index"
+          v-if="item.dynamicTypeName!='默认'"
+          >
             <p :class="activeIndex == index?'allTitle-tit active':'allTitle-tit'"  @click="getDatatype(item.dynamicTypeId,index)">{{item.dynamicTypeName}}</p>
             <p class="allTitle-line" v-if="activeIndex == index"></p>
         </div>
     </div>
     <div class="detail" v-if="dataSource.length>0" >
         <div class="detail-box" 
-      v-for="(item,index) in dataSource"  :key="index">
+        v-for="(item,index) in dataSource"  :key="index">
             <p class="detail-box-title">{{item.dynamicTitle }}</p>
             <p class="detail-box-des" v-html="item.content" ></p>
-             <van-image fit="contain" :src="item.coverImgId" />
+            <van-image fit="contain" :src="item.coverImgId" @click="goTopaoducdatail(item.dynamicId)"/>
             <!-- <img  :src="item.coverImgId"/> -->
             <p class="detail-box-time">  {{$RegExp.getNowTime(item.insertTime)}}发布</p>
         </div>
+    </div>
+    <div v-else class="nonedataclass">
+      暂无数据
+    </div>
     </div>
      <div v-else class="zhanweitu">
         <van-image  fit="contain" :src="images.zhanwei" />
@@ -100,6 +107,15 @@ export default {
 
   },
     methods:{
+         //去详情
+    goTopaoducdatail(id){
+      this.$router.push({
+        name:"Productdetails",
+        query:{
+          dynamicId:id
+        }
+      })    
+    },
           getDatatype(id,index){
             if(index == "all"){
                   this.activeIndex = index
@@ -241,6 +257,11 @@ color:rgba(168,168,168,1);
       }
 
   }
+  .nonedataclass{
+    text-align: center;
+    font-size: 30px;
+    margin-top:50px;
+      }
     
 }
 

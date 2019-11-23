@@ -2,7 +2,10 @@
   <div id="product">
     <GlobaHeader :text="text" />
     <van-search v-model="value" placeholder="请输入搜索关键词" show-action shape="round" @search="onSearch"></van-search>
-    <div class="Vanswipe" v-show="dataBanner.length>0">
+    <div v-if="dataBanner.length>0 || dataSource.length>0 || dataType.length>0">
+
+  
+    <div class="Vanswipe" v-show="dataBanner.length>0 ">
       <van-swipe :autoplay="3000" indicator-color="white">
         <van-swipe-item v-for="(item,index) in dataBanner" :key="index">
                   <van-image fit="contain" :src="item.bannerUrl"/>
@@ -11,11 +14,11 @@
     </div>
     <div class="banlan">
       <div class="banlan-all">
-         <div class="img-box" @click="getDatatype()"><img :src="images.all" /></div>
+         <div class="img-box" @click="getDatatype('','全部')"><img :src="images.all" /></div>
         <span>全部</span>
       </div>
-      <div class="banlan-all" v-show="dataType.length>0"  v-for="(itype,indextype) in dataType" :key="indextype">
-        <div class="img-box"  @click="getDatatype(itype.productTypeId)"><img :src="itype.productTypeImgId" /></div>
+      <div class="banlan-all" v-show="dataType.length>0"  v-for="(itype,indextype) in dataType" :key="indextype" v-if="itype.productTypeName !='默认'">
+        <div class="img-box"  @click="getDatatype(itype.productTypeId,itype.productTypeName)"><img :src="itype.productTypeImgId" /></div>
         <span>{{itype.productTypeName}}</span>
       </div>
     </div>
@@ -23,7 +26,7 @@
       <div 
       :class="isdecshow == 0?'moren':'moren nomoren'"
         @click="getAll">
-        <span>默认</span>
+        <span>{{morenName}}</span>
         <img :src="isdecshow == 0?images.arrowO:images.arrow" />
       </div>
       <div  @click="getTime"
@@ -51,6 +54,7 @@
         </div>
       </div>
       <p class='noproduct'>已展示全部产品</p>
+    </div>
     </div>
     <div v-else class="zhanweitu">
         <van-image  fit="contain" :src="images.zhanwei" />
@@ -82,6 +86,7 @@ export default {
       dataBanner:[],
       dataType:[],
       dataSource:[],
+      morenName:"默认",
     };
   },
   created(){
@@ -222,8 +227,9 @@ export default {
 
     },
 
-    getDatatype(id){
+    getDatatype(id,name){
         let linCus = localStorage.getItem('customerNo')?localStorage.getItem('customerNo'): 11139
+        this.morenName = name
         let datas={
         custNo:linCus,
         }

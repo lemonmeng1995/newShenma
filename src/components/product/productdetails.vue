@@ -59,7 +59,7 @@ export default {
 
     }else{
         nowCon = this.$route.query.dynamicId
-        this.text = this.$route.query.name
+        this.text = "动态详情"
         datas ={dynamicId:nowCon}
         url =  `${baseUrl}/smDynamic/detailDynamic`
     }

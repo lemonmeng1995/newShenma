@@ -2,7 +2,7 @@
 <div id="briefintroduction">
     <GlobaHeader :text="text" />
     <p class="briefint-title">个人简历</p>
-    <div v-if="introduceTitle">
+    <div v-if="introduceTitle" class="classintroduce">
     <p class="briefint-des">{{introduceTitle}}</p>
     <p class="briefint-text">
          {{richText}}     
@@ -109,6 +109,9 @@ export default {
         margin:30px;
 
     }
+    .classintroduce{
+        font-size: 0;
+    }
     .briefint-des{
         height:87px;
         line-height: 87px;
@@ -143,7 +146,7 @@ color:rgba(85,85,85,1);
     .uploadMP4-box{
         margin:0 20px;
         overflow: hidden;
-
+        
         .videoclass{
             width: 100%;
             // height: 400px;

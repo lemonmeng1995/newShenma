@@ -112,8 +112,20 @@ export default {
     },
     //提交走新增接口 POST /smProductBanner/saveBathSmProductBanner
     getSubmit(){
-         let datas={
+         let datas;
+          if( this.imgIdArr.length == 0){
+            datas={
+            smProductBannerList : [{
+              bannerUrl :"",
+              bannerImgId : "",
+              customerNo : localStorage.getItem('customerNo')
+
+            }]
+          }
+          }else{
+             datas={
             smProductBannerList : this.imgIdArr
+          }
           }
           this.fetch("/smProductBanner/saveBathSmProductBanner", datas, "post").then(res => {
              if(res.errCode =="0000"){

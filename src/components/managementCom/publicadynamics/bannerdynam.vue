@@ -95,8 +95,6 @@ export default {
         }
       });
       this.imgIdArr.push(linObj);
-
-  
     },
 
       //删除图片
@@ -109,9 +107,21 @@ export default {
     },
     //提交走新增接口 POST /smProductBanner/saveBathSmProductBanner
     getSubmit(){
-         let datas={
+          let datas;
+          if( this.imgIdArr.length == 0){
+            datas={
+            smDynamicBannerList : [{
+              bannerImgUrl :"",
+              bannerImgId : "",
+              customerNo : localStorage.getItem('customerNo')
+            }]
+          }
+          }else{
+             datas={
             smDynamicBannerList : this.imgIdArr
           }
+          }
+
           this.fetch("/smDynamicBanner/saveBathDynamicBanner", datas, "post").then(res => {
              if(res.errCode =="0000"){
                  console.log("res999，",res.data)

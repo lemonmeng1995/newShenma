@@ -213,25 +213,23 @@ destroyed() {
             this.imgIdArr.forEach((item, index) => {
           imgidStrArr.push(item.id);
         });
-          datas.imgId = imgidStrArr.join(",");
+          datas.imgId = imgidStrArr.join(",") || "";
         }
         if( this.videoArr.length>0 ){
              this.videoArr.forEach((item, index) => {
           videoArrLin.push(item.id);
         });
-        datas.videoId = videoArrLin.join(",");
+        datas.videoId = videoArrLin.join(",") || "";
         }
          if(this.$refs.vueHtml.content){
-       datas.richText = this.$refs.vueHtml.content
+       datas.richText = this.$refs.vueHtml.content || ""
     }
     let url;
     if(this.isEdie){
       url = this.apis.updateIntroduce
-
     }else{
         url =  this.apis.addIntroduce
     }
- 
         console.log("提交，0",datas)
           this.fetch(url, datas, "post").then(res => {
             console.log("res,",res)
@@ -292,14 +290,20 @@ destroyed() {
       width: 100%;
       .uploadMP4-box {
         width: 100%;
+        position: relative;
         .videoclass {
           width: 100%;
           height: 400px;
         }
         .van-icon {
+          margin-top:20px;
+          background-color: aliceblue;
           font-size: 40px;
           position: absolute;
-          right: 60px;
+          right: 30px;
+          border-radius: 50%;
+          color: #eee;
+          border: 1px solid #eee;
         }
       }
     }

@@ -19,8 +19,8 @@
     <div
       class="topHome"
      
-      :style="!styleShow?{backgroundImage: 'url(' + dataSource.smUserinfo.headId + ')' , backgroundSize:'cover',
-       backgroundPosition: '50px 0px',
+      :style="!styleShow?{backgroundImage: 'url(' + dataSource.smUserinfo.headId + ')' , backgroundSize:'140%',
+       backgroundRepeat:no-repeat,
       } : ''"
     >
      <div v-if="styleShow" class="stylewuwu">
@@ -81,7 +81,7 @@
             </p>
             <p class="xiangmessage-top-right">
               <img :src="image.wode01" />
-              <span>人脉40</span>
+              <span>人脉 {{dataSource.smUserinfo.viewCount}}</span>
             </p>
           </div>
           <div v-if="dataSource.smUserinfo.companyAddress" class="xiangmessage-bom">
@@ -377,6 +377,7 @@ export default {
                  that.dataSource = res.data  
                  localStorage.setItem('phoneNumUser',res.data.smUserinfo.phoneNum) 
                  console.log("数据源", that.dataSource ) 
+                 document.title = res.data.smUserinfo.name+"名片"
 
                 if(res.data.smUserinfo.custStyle){
                   let isStyle = res.data.smUserinfo.custStyle?res.data.smUserinfo.custStyle:4
@@ -534,8 +535,9 @@ export default {
       this.$router.push("/forgetpass");
     },
     getSure(){
-    let datas={cardCustomerId:this.gloabCus,phoneNum:this.phoneNumSou }
-    let that = this
+      if(this.phoneNumSou){
+           let datas={cardCustomerId:this.gloabCus,phoneNum:this.phoneNumSou }
+      let that = this
       $.ajax({
             type : "post",
             url : `${baseUrl}/smCard/addSmCard`,
@@ -553,6 +555,12 @@ export default {
                }
             }
         });
+
+      }else{
+        this.$toast("请填写手机号码！")
+
+      }
+ 
     },
     onsubmit() {
      
@@ -1079,6 +1087,7 @@ color:rgba(90,90,90,1);
     background: rgb(128, 128, 184);
     .conImage-box {
       padding: 20px;
+      font-size: 0;
       img{
            width: 100%;
            height: 100%;
@@ -1087,9 +1096,9 @@ color:rgba(90,90,90,1);
         width: 100%;
         height: 100%;
       }
-       .van-image:not(:first-child) {
-      margin-top:-5px;
-      }
+      //  .van-image:not(:first-child) {
+      // margin-top:-5px;
+      // }
       .uploadMP4-box{
         // margin:0 20px;
         overflow: hidden;
