@@ -14,7 +14,7 @@
               <a href="" @click="callPhone(item.phoneNum)">{{item.phoneNum}}</a>
             </div>
           </div>
-          <div class="del" @click="del()">
+          <div class="del" @click="del(item.cardId)">
             删除
           </div>
         </div>
@@ -94,11 +94,10 @@ export default {
             dataType: "json",
             data:datas, //请求php的参数名
             ContentType: 'application/json',
-            success : function(res) {   
-              console.log("res",res)   
+            success : function(res) {    
                if(res.errCode ="0000"){
                  that.getData()   
-                 this.$toast("删除成功")              
+                 that.$toast("删除成功")              
                }
             }
         });

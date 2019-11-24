@@ -9,7 +9,9 @@
     </div>
     <div class="gelixian"></div>
     <div class="product-detail">
-        <p class="product-title">产品介绍</p>
+        <p class="product-title">
+          {{ this.$route.query.dynamicId?'内容':'产品介绍'}}
+          </p>
         <p class="product-text"  v-html="dataList.productDescribe?dataList.productDescribe:dataList.content">
           <!-- {{dataList.productDescribe}} -->
           </p>
@@ -21,7 +23,7 @@
       
         <!-- <img v-if="dataList.imgUrlList"  v-for="(item,index) in dataList.imgUrlList" :key="index" :src="item" /> -->
          <!-- <img v-if="dataList.imgUrlList"  v-for="(item,index) in dataList.imgUrlList" :key="index" :src="item" /> -->
-          <div class="uploadMP4" v-if="dataList.videoUrlList>0">
+          <div class="uploadMP4" v-if="dataList.videoUrlList.length>0">
           <div class="uploadMP4-box" v-for="(item,index) in dataList.videoUrlList" :key="index">
           <video class="videoclass" :src="item" controls="controls"></video>
         </div>
@@ -73,9 +75,10 @@ export default {
             data: datas, //请求php的参数名
             ContentType: 'application/json',
             success : function(res) {  
-                console.log("res",res)      
+                  
                if(res.errCode ="0000"){
-                 that.dataList = res.data                              
+                 that.dataList = res.data 
+                  console.log("res",res,that.dataList.videoUrlList)                                
                }
             }
         });  

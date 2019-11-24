@@ -20,8 +20,8 @@ module.exports = {
       }
     },
     // Various Dev Server settings
-    // host: 'localhost', // can be overwritten by process.env.HOST
-    host: '192.168.2.108',
+    host: 'localhost', // can be overwritten by process.env.HOST
+    // host: '192.168.2.108',
     // host: '192.168.43.121',
     port: 9000,
 

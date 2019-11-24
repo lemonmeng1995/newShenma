@@ -566,7 +566,9 @@ export default {
     }
   }
 
-  
+  .van-popup{
+    margin-bottom:100px;
+  }
     .submit{
       height:86px;
 background:rgba(255,59,59,1);

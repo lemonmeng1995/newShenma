@@ -180,7 +180,7 @@ export default {
   // }
    .menuList_box{
       position: fixed;
-      z-index:99999;
+      z-index:1001;
       bottom: 0;
       left: 0;
       width: 100%;

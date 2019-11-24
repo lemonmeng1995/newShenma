@@ -86,7 +86,8 @@ export default {
             ContentType: 'application/json',
             success : function(res) {      
                if(res.errCode ="0000"){
-                 that.smUserinfo = res.data.smUserinfo       
+                 that.smUserinfo = res.data.smUserinfo  
+                 document.title = res.data.smUserinfo.name     
                }
             }
         });

@@ -53,7 +53,7 @@
             </p>
             <p class="xiangmessage-top-right">
               <img :src="image.wode01" />
-              <span>人脉40</span>
+              <span>人脉{{dataSource.smUserinfo.viewCount }}</span>
             </p>
           </div>
           <div v-if="dataSource.smUserinfo.companyAddress" class="xiangmessage-bom">
@@ -227,6 +227,8 @@
         </div>
       </div>
     </van-popup>
+
+    <van-popup v-model="showTUtime" :close-on-click-overlay= 'false'>您访问得名片已到期</van-popup>
   </div>
 </template>
 
@@ -244,6 +246,7 @@ export default {
       dataSource:{},
       musicfile: require("../../assets/musci/muc.mp3"),
       value:"",
+      showTUtime:false,
        styleArr:[
             {isShow:0,styleObj:{
           backgroundHeader:'rgba(60,60,60,0.6)',
@@ -377,7 +380,14 @@ export default {
                  that.dataSource = res.data  
                  localStorage.setItem('phoneNumUser',res.data.smUserinfo.phoneNum) 
                  console.log("数据源", that.dataSource ) 
-                 document.title = res.data.smUserinfo.name+"名片"
+                 document.title = res.data.smUserinfo.name
+                 let tineqi = new Date(res.data.smUserinfo.duTime)
+                 let tineNow = new Date()
+ console.log("日期,",tineqi,tineNow,tineqi.getTime(tineqi) ,tineNow.getTime(tineNow),
+ tineqi.getTime(tineqi) < tineNow.getTime(tineNow))
+                 if(tineqi.getTime(tineqi) < tineNow.getTime(tineNow)){
+                   that.showTUtime = true
+                 }
 
                 if(res.data.smUserinfo.custStyle){
                   let isStyle = res.data.smUserinfo.custStyle?res.data.smUserinfo.custStyle:4
@@ -1290,6 +1300,16 @@ color:rgba(90,90,90,1);
         }
       }
     }
+  }
+  /deep/.van-overlay{
+    z-index:999999 !important;
+  }
+ /deep/ .van-popup--center{
+    z-index: 1000000  !important;
+    width: 40%;
+    height: 200px;
+    text-align: center;
+   line-height: 200px;
   }
 }
 </style>

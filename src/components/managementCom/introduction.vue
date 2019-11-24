@@ -213,17 +213,20 @@ destroyed() {
             this.imgIdArr.forEach((item, index) => {
           imgidStrArr.push(item.id);
         });
-          datas.imgId = imgidStrArr.join(",") || "";
+        
         }
+          datas.imgId = imgidStrArr.join(",") || "";
         if( this.videoArr.length>0 ){
              this.videoArr.forEach((item, index) => {
           videoArrLin.push(item.id);
         });
-        datas.videoId = videoArrLin.join(",") || "";
+       
         }
-         if(this.$refs.vueHtml.content){
-       datas.richText = this.$refs.vueHtml.content || ""
-    }
+        datas.videoId = videoArrLin.join(",") || "";
+        datas.richText = this.$refs.vueHtml.content || ""
+    //      if(this.$refs.vueHtml.content){
+    //    datas.richText = this.$refs.vueHtml.content || ""
+    // }
     let url;
     if(this.isEdie){
       url = this.apis.updateIntroduce
