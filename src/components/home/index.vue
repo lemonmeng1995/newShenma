@@ -163,7 +163,7 @@
               <div class="uploadMP4-box" v-for="(item,index) in dataSource.videoList" :key="index">
                 <video class="videoclass" :src="item" controls="controls"></video>
               </div>
-            <img class="sig-banner" :src="image.bannar" />
+            <!-- <img class="sig-banner" :src="image.bannar" /> -->
         </div>
      
       </div>

@@ -144,6 +144,7 @@ export default {
           // console.log("res1,", res)
           if(res.errCode == '0000'){
             // this.$toast("保存成功")
+            this.$store.dispatch('backgroundBotm', Number(this.isShow)); 
             this.$router.push("/home")
           }
         });

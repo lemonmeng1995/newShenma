@@ -570,6 +570,7 @@ export default {
             });
         }else{
            localStorage.setItem("customerNo", res.custNo);
+             this.$store.dispatch('backgroundBotm',4); 
              this.$router.push({
               name: "Home",
               query: {

@@ -31,7 +31,13 @@ export default {
   name: 'App',
   data(){
     return{
-      images:{},
+       images:{
+         businesscard: require("../src/assets/chostyle/fffcard.png"),
+            product1: require("../src/assets/chostyle/fffpro.png"),
+            freecreation: require("../src/assets/chostyle/ffffree.png"),
+            dynamiccom: require("../src/assets/chostyle/fffdyn.png"),
+            briefintroduction: require("../src/assets/chostyle/fffinto.png")
+      },
       // images:{
       //   briefintroduction:require("../src/assets/chostyle/briefintroduction.png"),
       //   dynamiccom:require("../src/assets/chostyle/product1.png"),
