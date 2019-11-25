@@ -90,14 +90,20 @@
     <p class="requi-box">内容</p>
     <div class="context-mp4">
       <div class="onmusic">
-        <van-uploader :after-read="afterReadMP" accept=".mp4, .qlv, .ogg">
-          <img :src="images.vidoe" />
-        </van-uploader>
+        <div class="uploadMP" :style="{background:images.vidoe}">
+           <input id="upmpID" type="file" @change="afterReadMP" accept="video/*" multiple="multiple" />
+        </div> 
+        <!-- <van-uploader :after-read="afterReadMP" accept=".mp4, .qlv, .ogg" v-model="videoArr">
+          <img :src="images.vidoe" v-if="videoArr.length == 0" />
+          <video  :src="item.url" controls="controls" v-else></video>
+        </van-uploader> -->
         <span>支持MP4、WebM、Ogg</span>
       </div>
       <div class="uploadMP4">
         <div class="uploadMP4-box" v-for="(item,index) in videoArr" :key="index">
-          <video class="videoclass" :src="item.url" controls="controls"></video>
+          <div class="videoclass">
+            <video class="videoclass" :src="item.url" controls="controls"></video>
+          </div>
           <van-icon name="cross" color="red" @click="deleVideo(index)" />
         </div>
       </div>
@@ -459,13 +465,14 @@ export default {
     //上传视频
     afterReadMP(file) {
       // 此时可以自行将文件上传至服务器
-      console.log(file);
+      console.log("视频",file,event.target.files[0],file.target,file.target.files[0]);
        this.isLoading = true
 
       var file1 = file.file;
       var formData = new FormData();
-      formData.file = file.file;
-      formData.append("file", file.file);
+      // formData.file = file.file;
+      // formData.append("file", file.file);
+      formData.append("file",file.target.files[0]);
       formData.append("fileType", "3");
 
       const url = this.apis.fileUploadImg;
@@ -845,7 +852,7 @@ export default {
     border: 0px solid rgba(0, 0, 0, 1);
     box-shadow: 0px 0px 17px 0px rgba(208, 208, 207, 1);
     border-radius: 10px;
-
+    overflow: hidden;
     .onmusic {
       padding: 10px;
       // padding-bottom: 10px;
@@ -855,6 +862,20 @@ export default {
         width: 269px;
         height: 90px;
       }
+      .uploadMP{
+        // background-image: 
+        width: 269px;
+        height: 90px;
+        // background-color: red;
+        background: url(~@/assets/creact/vidoe.png) no-repeat center;
+        background-size:100% 100%;
+         #upmpID{
+         opacity: 0;
+         width: 269px;
+         height: 90px;
+       }
+      }
+     
       span {
         margin-left: 100px;
         font-size: 21px;
@@ -868,15 +889,18 @@ export default {
       width: 100%;
       .uploadMP4-box {
         width: 100%;
+        height:400px;
         position: relative;
         .videoclass {
           width: 100%;
           height: 400px;
+          position: absolute;
         }
         .van-icon {
           margin-top:20px;
           background-color: aliceblue;
           font-size: 40px;
+          z-index: 2;
           position: absolute;
           right: 30px;
           border-radius: 50%;
