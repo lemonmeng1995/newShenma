@@ -227,8 +227,8 @@
         </div>
       </div>
     </van-popup>
-
-    <van-popup v-model="showTUtime" :close-on-click-overlay= 'false'>您访问得名片已到期</van-popup>
+   
+    <van-popup class="daoqibox" v-model="showTUtime" :close-on-click-overlay= 'false'>您访问得名片已到期</van-popup>
   </div>
 </template>
 
@@ -389,16 +389,17 @@ export default {
                    that.showTUtime = true
                  }
 
-                if(res.data.smUserinfo.custStyle){
+                // if(res.data.smUserinfo.custStyle){
                   let isStyle = res.data.smUserinfo.custStyle?res.data.smUserinfo.custStyle:4
+                  console.log("123,custStyle",res.data.smUserinfo.custStyle,isStyle)
                        that.custStyle = that.styleArr[isStyle].styleObj
                 if(that.styleArr[isStyle].isShow == 4){
                   that.styleShow = true
                 }
                 that.$store.dispatch('backgroundBotm', Number(isStyle)); 
-                }else{
-                   that.custStyle = that.styleArr[0].styleObj
-                }
+                // }else{
+                //    that.custStyle = that.styleArr[4].styleObj
+                // }
             
                }
             }
@@ -1301,7 +1302,8 @@ color:rgba(90,90,90,1);
       }
     }
   }
-  /deep/.van-overlay{
+  .daoqibox{
+      /deep/.van-overlay{
     z-index:999999 !important;
   }
  /deep/ .van-popup--center{
@@ -1311,5 +1313,8 @@ color:rgba(90,90,90,1);
     text-align: center;
    line-height: 200px;
   }
+
+  }
+
 }
 </style>

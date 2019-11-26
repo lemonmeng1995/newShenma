@@ -78,9 +78,13 @@
         <van-field v-model="formData.job" placeholder="职位" />
       </div>
       <div class="onmusic">
-        <van-uploader :after-read="afterReadYP" accept=".mp3, .Ogg, .WAV">
+        <div class="upMP3" :style="{background:images.onloadmuci}">
+           <input id="upmpMP3ID" type="file" @change="afterReadYP" accept="audio/*" multiple="multiple" />
+        </div>
+        <!-- <van-uploader :after-read="afterReadYP" accept=".mp3, .Ogg, .WAV">
           <img :src="images.onloadmuci" />
-        </van-uploader>
+             <input id="upmpID" type="file" @change="afterReadYP" accept="audio/*" multiple="multiple" />
+        </van-uploader> -->
         <div class="success" v-if="formData.bagMusicId !=''">
           <img :src="images.mucs"/>
         </div>
@@ -235,7 +239,6 @@ export default {
                  that.wechatCodeIdArr[0] = weobj;
                  if( res.data.companyName ){
                      that.formData.companyName =  res.data.companyName
-
                  }
                   if( res.data.tel ){
                      that.formData.tel =  res.data.tel
@@ -446,10 +449,10 @@ export default {
       // 此时可以自行将文件上传至服务器
       console.log(file);
         this.isLoading = true
-      var file1 = file.file;
+      // var file1 = file.file;
       var formData = new FormData();
-      formData.file = file.file;
-      formData.append("file", file.file);
+      // formData.file = file.file;
+      formData.append("file", file.target.files[0]);
       formData.append("fileType", "2");
       const url = this.apis.fileUploadImg;
       this.fetch(url, formData, "post").then(res => {
@@ -796,6 +799,21 @@ export default {
       padding-bottom: 20px;
       display: flex;
       justify-content: space-between;
+      
+      .upMP3{
+        width: 260px;
+        height: 90px;
+        // background-color: red;
+        background: url(~@/assets/creact/onloadmuci.png) no-repeat center;
+        background-size:100% 100%;
+         #upmpMP3ID{
+         opacity: 0;
+         width: 269px;
+         height: 90px;
+       }
+   
+
+      }
       .success {
         // margin-left:-30px;
         position: absolute;
