@@ -3,7 +3,8 @@
     <div class="catrelease-title">名称*</div>
     <van-field v-model="productName" placeholder="请输入名称" />
     <div class="catrelease-title">类别*</div>
-    <van-field @click="getLeibie" readOnly='readOnly' ref="val" v-model="productTypeName?productTypeName:moreren" placeholder="请选择" />
+    <van-field @click="getLeibie" readOnly='readOnly' ref="val"
+     v-model="productTypeName?productTypeName:moreren" placeholder="请选择" />
     <div class="catrelease-title">价格(元)*</div>
     <van-field v-model="productPrice" type="number" placeholder="请输入价格" />
     <div class="catrelease-title">序号*</div>
@@ -334,7 +335,8 @@ export default {
       }
       this.productTypeName = item.productTypeName
     },
-      onSubmit(){
+
+    onSubmit(){
     console.log("提交,imgId", this.$refs.vueHtml.content)
     // this.productImgId = "137"
     if(
@@ -352,8 +354,10 @@ export default {
       productName :this.productName ,
       productPrice:this.productPrice,
       productSort:this.productSort,
-      productTypeId:this.productTypeId,
 
+    }
+     if(this.productTypeId!="默认"){
+       datas.productTypeId = this.productTypeId
     }
     if(this.productImgId){
         datas.productImgId = this.productImgId

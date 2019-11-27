@@ -14,7 +14,9 @@
         </div>
       </div>
 
-      <div class="context-box" v-if="List.length>0" v-for="(item,index) in List" :key="index">
+      <div class="context-box"  v-for="(item,index) in List" :key="index"
+      v-if="List.length>0 &&  item.dynamicTypeName != '默认'"
+      >
         <div class="text">
           <span class="text-onen">{{item.dynamicTypeSort}}</span>
           <span class="text-onet">{{item.dynamicTypeName }}</span>
