@@ -20,7 +20,10 @@
           <img @click="showCard" class="top-card" :src="images.card" />
         </div>
         <div class="context-bom">
-          <p>智享版:{{smUserinfo.duTime}}到期</p>
+          
+          <p>智享版:
+            {{new Date(smUserinfo.duTime).getFullYear() + '-' + (Number(new Date(smUserinfo.duTime).getMonth()) + 1) + '-' + new Date(smUserinfo.duTime).getDate()}}
+          到期</p>
           <img :src="images.code"  @click="getQucode"/>
         </div>
         <div class="compon-name">{{smUserinfo.companyName}}</div>

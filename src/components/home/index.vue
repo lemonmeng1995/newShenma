@@ -1303,6 +1303,11 @@ color:rgba(90,90,90,1);
     }
   }
   .daoqibox{
+    padding: 20px;
+ line-height: 60px;
+//  z-index: 2002;
+ height: 60px;
+
       /deep/.van-overlay{
     z-index:999999 !important;
   }

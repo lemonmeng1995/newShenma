@@ -40,9 +40,12 @@
     </div>
       <div class="context-mp4">
       <div class="onmusic">
-        <van-uploader :after-read="afterReadMP" accept=".mp4, .qlv, .ogg">
+        <!-- <van-uploader :after-read="afterReadMP" accept=".mp4, .qlv, .ogg">
           <img :src="images.vidoe" />
-        </van-uploader>
+        </van-uploader> -->
+         <div class="uploadMP" :style="{background:images.vidoe}">
+           <input id="upmpID" type="file" @change="afterReadMP" accept="video/*" multiple="multiple" />
+        </div> 
         <span>支持MP4、WebM、Ogg</span>
       </div>
       <div class="uploadMP4">
@@ -246,7 +249,7 @@ export default {
       var file1 = file.file;
       var formData = new FormData();
       formData.file = file.file;
-      formData.append("file", file.file);
+      formData.append("file", file.target.files[0]);
       formData.append("fileType", "3");
 
       const url = this.apis.fileUploadImg;
@@ -498,6 +501,19 @@ export default {
       img {
         width: 269px;
         height: 90px;
+      }
+      .uploadMP{
+        // background-image: 
+        width: 269px;
+        height: 90px;
+        // background-color: red;
+        background: url(~@/assets/creact/vidoe.png) no-repeat center;
+        background-size:100% 100%;
+         #upmpID{
+         opacity: 0;
+         width: 269px;
+         height: 90px;
+       }
       }
       span {
         margin-left: 100px;

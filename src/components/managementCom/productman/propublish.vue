@@ -327,7 +327,11 @@ export default {
         }); 
     },
     onAssignment(item){
-      this.productTypeId =  item.productTypeId
+      if(item.productTypeName == "默认"){
+        this.productTypeId = "默认"
+      }else{
+          this.productTypeId =  item.productTypeId
+      }
       this.productTypeName = item.productTypeName
     },
       onSubmit(){
@@ -336,7 +340,8 @@ export default {
     if(
       !this.productImgId 
     || !this.productName  || !this.productPrice || !this.productSort
-    || !this.productTypeId){
+    ){
+      console.log("this.productTypeId",this.productTypeId)
       this.$toast("请填写完整")
 
     }else{
@@ -587,7 +592,7 @@ export default {
   }
 
   .van-popup{
-    margin-bottom:100px;
+    // margin-bottom:100px;
   }
     .submit{
       height:86px;
