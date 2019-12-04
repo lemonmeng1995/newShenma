@@ -25,7 +25,7 @@
          <!-- <img v-if="dataList.imgUrlList"  v-for="(item,index) in dataList.imgUrlList" :key="index" :src="item" /> -->
           <div class="uploadMP4" v-if="dataList.videoUrlList.length>0">
           <div class="uploadMP4-box" v-for="(item,index) in dataList.videoUrlList" :key="index">
-          <video class="videoclass" :src="item" controls="controls"></video>
+          <video class="videoclass" :src="item" controls="controls" x5-video-player-type="h5"></video>
         </div>
       </div>
 

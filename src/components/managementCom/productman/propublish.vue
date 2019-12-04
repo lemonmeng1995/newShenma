@@ -53,7 +53,7 @@
       </div>
       <div class="uploadMP4">
         <div class="uploadMP4-box" v-for="(item,index) in videoArr" :key="index">
-          <video class="videoclass" :src="item.url" controls="controls"></video>
+          <video class="videoclass" :src="item.url" controls="controls" x5-video-player-type="h5"></video>
           <van-icon name="cross" color="red" @click="deleVideo(index)" />
         </div>
       </div>

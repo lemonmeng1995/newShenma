@@ -26,16 +26,6 @@
           <img :src="images.shanchu" @click="dele(item.dynamicTypeId)"/>
         </div>
       </div>
-      <!-- <div class="context-box">
-        <div class="text">
-          <span class="text-onen">排序1</span>
-          <span class="text-onet">食物</span>
-        </div>
-        <div class="icon">
-          <img :src="images.bianji" />
-          <img :src="images.shanchu" />
-        </div>
-      </div> -->
     </div>
   </div>
 </template>
@@ -54,13 +44,6 @@ export default {
       dystate:"0", //状态
       dynamicTypeName : "", //动态类别名称 ,
       dynamicTypeSort:"" ,  //排序
-
-      // customerNo (integer, optional): 客户编号 ,
-// dynamicId (integer, optional): 动态ID ,
-
-// dynamicTypeId (integer, optional): 动态类别ID ,
-// dynamicTypeName (string, optional): 动态类别名称 ,
-
     };
   },
   created(){

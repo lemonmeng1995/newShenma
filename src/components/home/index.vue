@@ -24,16 +24,11 @@
       } : ''"
     >
      <div v-if="styleShow" class="stylewuwu">
-      
-        <!-- <div class="touximage" :style="{background:custStyle.backgroundCir}">
-           <van-image :src="dataSource.smUserinfo.headId" round fit="cover"/>
-        </div> -->
          <van-image
               fit="fill"
               :src="dataSource.smUserinfo.headId"
             />
         <div class="stylewuwu-info" :style="{background:custStyle.backgroundHeader}">
-          <!-- <img   :src="custStyle.backgroundHeader"/> -->
          
             <h3>{{dataSource.smUserinfo.companyName }}</h3>
             <div class="info-box">
@@ -161,7 +156,7 @@
             </lazy-component> -->
             <!-- </div> -->
               <div class="uploadMP4-box" v-for="(item,index) in dataSource.videoList" :key="index">
-                <video class="videoclass" :src="item" controls="controls"></video>
+                <video class="videoclass" :src="item" controls="controls"  x5-video-player-type="h5"></video>
               </div>
             <!-- <img class="sig-banner" :src="image.bannar" /> -->
         </div>
@@ -171,9 +166,9 @@
 
     <div class="joinman" :style="{background:custStyle.backgroundCir || custStyle.firstbox}"> 
       <p class="joinman-name" @click="getLogin">进入名片管理中心</p>
-      <!-- <p class="joinman-image" > 
+      <p class="joinman-image"  @click="getnewCard"> 
          <img  :src="image.xuanfu"/>
-      </p> -->
+      </p>
     </div>
     <!-- //二维码的容器 -->
     <!-- <van-popup v-show="showqrCode">
@@ -193,6 +188,23 @@
         <!-- <img src="../assets/images/close.png" alt="" @click="closePopup()"/> -->
      </div> 
     </div> 
+
+    <div class="alert_maskimg" v-show="showImage">
+      <div class="alert_bg" id="mymapimg">
+          <img class="alert_img" :src="shareImg" alt="" />
+          <!-- <div class="qrCode" id="qrcode" ref="qrcode" :style="{width:150+'px',height:150+'px'}"></div>  -->
+      </div>
+    
+      <div class='alert_close' >
+         <p>长按图片识别保存</p>
+          <van-icon name="cross"  @click="closePopupShare()"/>
+        <!-- <img src="../assets/images/close.png" alt="" @click="closePopup()"/> -->
+     </div> 
+    </div> 
+     <div class="httpMask" v-show="shengcimg">
+    <van-loading size="24px" color="#1989fa" vertical>生成图片中...</van-loading>
+   </div>
+
     <van-popup v-model="show" position="bottom" :style="{}">
       <div class="login">
         <div class="login-title">登入名片</div>
@@ -227,8 +239,8 @@
         </div>
       </div>
     </van-popup>
-   
-    <van-popup class="daoqibox" v-model="showTUtime" :close-on-click-overlay= 'false'>您访问得名片已到期</van-popup>
+
+    <van-popup class="daoqi" v-model="showTUtime" :close-on-click-overlay='false'>您访问得名片已到期</van-popup>
   </div>
 </template>
 
@@ -246,6 +258,7 @@ export default {
       dataSource:{},
       musicfile: require("../../assets/musci/muc.mp3"),
       value:"",
+      shengcimg:false, //生成图片
       showTUtime:false,
        styleArr:[
             {isShow:0,styleObj:{
@@ -351,6 +364,7 @@ export default {
       gloabCus:"",  //全局得客户编码
       custStyle:{},   //选择得风格得对象，
       styleShow:false, //选择风格5得时候为true
+      showImage:false,
     };
   },
   created(){
@@ -389,23 +403,80 @@ export default {
                    that.showTUtime = true
                  }
 
-                // if(res.data.smUserinfo.custStyle){
+                if(res.data.smUserinfo.custStyle){
                   let isStyle = res.data.smUserinfo.custStyle?res.data.smUserinfo.custStyle:4
-                  console.log("123,custStyle",res.data.smUserinfo.custStyle,isStyle)
                        that.custStyle = that.styleArr[isStyle].styleObj
                 if(that.styleArr[isStyle].isShow == 4){
                   that.styleShow = true
                 }
                 that.$store.dispatch('backgroundBotm', Number(isStyle)); 
-                // }else{
-                //    that.custStyle = that.styleArr[4].styleObj
-                // }
+                }else{
+                   that.custStyle = that.styleArr[0].styleObj
+                }
             
                }
             }
         });
   },
   methods: {
+    //得到图片
+    getnewCard(){
+      this.shengcimg = true
+       let customerNoLin = this.nowCustomerNo
+       let that = this
+       let datas = {
+         customerNo:customerNoLin
+       }
+         $.ajax({
+            type : "post",
+            url :  `${baseUrl}/smCard/getCardPost`,
+            dataType: "json",
+            data:datas, //请求php的参数名
+            ContentType: 'application/json',
+            success : function(res) {  
+              console.log("res",res) 
+              // that.shareSh = res.cardUrl
+               that.shareImg = res.cardUrl
+                let image = new Image();
+        image.src = res.cardUrl;
+        image.onload = function () {
+            let canvas = document.createElement('canvas');
+            console.log("canvas",canvas)
+            let context = canvas.getContext('2d');
+            let imageW = image.width;
+            let imageH = image.height;
+            // canvas.width = imageW;
+            // canvas.height = imageH;
+            // context.drawImage(image,0,0,imageW,imageH);
+            // that.picUrl = canvas.toDataURL('image/jpeg/png');
+            // that.shareImg = that.picUrl;
+              that.showImage = true;
+              that.shengcimg = false
+           
+
+              // html2canvas(document.getElementById('mymapimg'),{
+              //       backgroundColor: null
+              //   }).then((canvas) => {
+              //      canvas.width = imageW;
+              //       canvas.height = imageH;
+              //       context.drawImage(image,0,0,imageW,imageH);
+              //       let dataURL = canvas.toDataURL("image/png");
+              //       console.log(dataURL)
+              //       this.fileDownload(dataURL);
+              //       that.shareImg = dataURL;
+              //       that.showImage = true;
+              //       // this.z_index = 1;
+              //   });
+
+        } 
+            }
+         })
+     
+
+    },
+    closePopupShare(){
+      this.showImage = false;
+    },
         //验证手机
     handleInput(e) {
       this.phoneNumUser = this.$RegExp.setOnlyNunber(e);
@@ -489,14 +560,10 @@ export default {
     getQucode(){
       this.showqrCode = true
       let shareUrl = "http://www.shenmaguanggao.top"
-      //  let shareUrl = "http://192.168.2.108:8080"
-      console.log("123,", document.getElementById("qrcode"))
       document.getElementById("qrcode").innerHTML = "";
       let image = new Image();
-      // let customerNoLin = gloabCus
-      console.log("123,",this.nowCustomerNo)
       let customerNoLin = this.nowCustomerNo
-       this.qrCode(`${shareUrl}/home?customerNo=${customerNoLin}`)
+      this.qrCode(`${shareUrl}/home?customerNo=${customerNoLin}`)
     },
        //转二维码
       qrCode (url) {
@@ -1107,17 +1174,14 @@ color:rgba(90,90,90,1);
         width: 100%;
         height: 100%;
       }
-      //  .van-image:not(:first-child) {
-      // margin-top:-5px;
-      // }
+    
       .uploadMP4-box{
-        // margin:0 20px;
         overflow: hidden;
         margin-top:-5px;
+        height:400px;
         .videoclass{
             width: 100%;
-            margin-top:-5px;
-            // height: 400px;
+            height:400px;
         }
     }
     }
@@ -1215,6 +1279,70 @@ color:rgba(90,90,90,1);
         }
       }
   }
+    //弹出层的样式
+  .alert_maskimg{
+    position: fixed;
+    display: flex;
+    align-content: flex-start;
+    justify-content: center;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, .7);
+    z-index: 10;
+    flex-wrap: wrap;
+  
+     
+    .alert_bg{
+      position: absolute;
+      display: flex;
+      margin-bottom: 120px;
+    
+      bottom: 0;
+      width:100%;
+      height: 650px;
+      flex-wrap: wrap;
+      justify-content: center;
+      background-color: #fff;
+      overflow: hidden;
+      .alert_img{
+        width: 600px; 
+        height:400px;
+        margin-top:200px;
+      }
+      .qrCode{
+        position: absolute;
+        bottom: 40px;
+        background: white;
+      }
+    }
+    .alert_close{
+        margin-top: 10px;
+        width: 100%;
+        text-align: center;
+        position: absolute;
+        bottom: 600px;
+        margin-bottom: 80px;
+        p{
+          color:#000;
+          font-size: 30px;
+          font-weight: 600;
+          text-align: center;
+          top: -20px;
+        }
+        .van-icon{
+          font-size: 50px;
+          right: 30px;
+          position: absolute;
+          top: -20px;
+        }
+        // img{
+        //   width: 64px;
+        //   height: 64px;
+        // }
+      }
+  }
 
   .van-popup {
     .login {
@@ -1302,12 +1430,7 @@ color:rgba(90,90,90,1);
       }
     }
   }
-  .daoqibox{
-    padding: 20px;
- line-height: 60px;
-//  z-index: 2002;
- height: 60px;
-
+  .daoqi{
       /deep/.van-overlay{
     z-index:999999 !important;
   }
@@ -1322,4 +1445,22 @@ color:rgba(90,90,90,1);
   }
 
 }
+</style>
+<style lang="scss">
+   .httpMask{
+    display: flex;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,.7);
+    align-items: center;
+    justify-content: center;
+    z-index: 10;
+    flex-wrap: wrap;
+    span{
+        color: #1989fa;
+    }
+   }
 </style>

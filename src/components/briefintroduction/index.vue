@@ -11,7 +11,7 @@
          <van-image fit="contain" :src="item.url"/>
      </div>
     <div class="uploadMP4-box" v-for="(item,index) in videoArr" :key="index">
-          <video class="videoclass" :src="item.url" controls="controls"></video>
+          <video class="videoclass" :src="item.url" controls="controls" x5-video-player-type="h5"></video>
     </div>
     </div>
     <div v-else class="zhanweitu">
@@ -144,12 +144,12 @@ color:rgba(85,85,85,1);
         margin:0 20px;
     }
     .uploadMP4-box{
-        margin:0 20px;
         overflow: hidden;
-        
+        margin-top:-5px;
+        height:400px;
         .videoclass{
             width: 100%;
-            // height: 400px;
+            height:400px;
         }
     }
     
