@@ -48,7 +48,7 @@
       <div class='alert_close' >
          <p>长按图片识别保存</p>
           <van-icon name="cross"  @click="closePopup()"/>
-        <!-- <img src="../assets/images/close.png" alt="" @click="closePopup()"/> -->
+    
      </div> 
     </div> 
   </div>
@@ -94,19 +94,20 @@ export default {
                }
             }
         });
-          // this.fetch("/smUserinfo/indexInfo", datas, "post").then(res => {
-          //    if(res.errCode ="0000"){
-          //        console.log("res999，",res.data)
-          //       //  this.$toast("提交成功！")
-          //       //  this.$router.push("/productman")                                   
-          //      }
-          // })
+        
 
   },
   methods:{
          //拨号
     callPhone (phoneNumber) {
         window.location.href = 'tel://' + phoneNumber
+           this.fetch(this.apis.addUserlog, {
+              customerNo:localStorage.getItem('customerNo'),
+              behavior:"3",
+            }, "post").then(res => {
+//                console.log("res.......全局拨号.................,",res)  
+
+        })
     },
     showCard(){
     this.$router.push("/cardholder")
@@ -141,10 +142,7 @@ export default {
             html2canvas(document.getElementById('mymap'),{
                     backgroundColor: null
                 }).then((canvas) => {
-                    let dataURL = canvas.toDataURL("image/png");
-                    // console.log(dataURL)
-                    // this.fileDownload(dataURL);
-                    // this.shareImg = dataURL;
+                    let dataURL = canvas.toDataURL("image/png");              
                     this.z_index = 1;
                 });
         },

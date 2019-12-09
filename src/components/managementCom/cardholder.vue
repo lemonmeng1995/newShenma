@@ -126,6 +126,14 @@ export default {
            //拨号
     callPhone (phoneNumber) {
     window.location.href = 'tel://' + phoneNumber
+       this.fetch(this.apis.addUserlog, {
+              customerNo:localStorage.getItem('customerNo'),
+              behavior:"3",
+            }, "post").then(res => {
+//                console.log("res.......全局拨号.................,",res)  
+
+        })
+  
 },
 getTohome(id){
   this.$router.push({

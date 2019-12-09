@@ -88,6 +88,14 @@ export default {
                //拨号
     callPhone () {
     window.location.href = 'tel://' + localStorage.getItem('phoneNumUser')
+     this.fetch(this.apis.addUserlog, {
+              customerNo:localStorage.getItem('customerNo'),
+              behavior:"3",
+            }, "post").then(res => {
+//                console.log("res.......全局拨号.................,",res)  
+
+        })
+
 },
         goBack(){
               this.$router.go(-1);

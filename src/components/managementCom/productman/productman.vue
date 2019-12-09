@@ -141,7 +141,7 @@ export default {
             success : function(res) {  
                 console.log("数据源0",res )         
                if(res.errCode ="0000"){
-                  this.getData()
+                 that.getData()
                  that.$toast("删除成功！")
                 //  that.dataSource = res.data   
                }

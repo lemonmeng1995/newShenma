@@ -23,6 +23,8 @@ const test = '/';
     updateUserInfo:test+'smUserinfo/updateUserInfo',      //编辑用户信息
     addIntroduce:test + 'smIntroduce/addIntroduce',                        //新增简介
     updateIntroduce:test + 'smIntroduce/updateIntroduce',      //编辑简介
+    selectSmUserlogTotal:test + 'smUserlog/selectSmUserlogTotal',      //访客统计
+    addUserlog:test + 'smUserlog/addUserlog' ,            //保存2 拨号1
    
 
 }

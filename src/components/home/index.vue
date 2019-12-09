@@ -523,6 +523,13 @@ export default {
        //拨号
     callPhone (phoneNumber) {
     window.location.href = 'tel://' + phoneNumber
+      this.fetch(this.apis.addUserlog, {
+              customerNo:this.nowCustomerNo,
+              behavior:"3",
+            }, "post").then(res => {
+//                console.log("res........................,",res)  
+
+        })
 },
 
           //复制
@@ -564,6 +571,13 @@ export default {
       let image = new Image();
       let customerNoLin = this.nowCustomerNo
       this.qrCode(`${shareUrl}/home?customerNo=${customerNoLin}`)
+      this.fetch(this.apis.addUserlog, {
+              customerNo:customerNoLin,
+              behavior:"2",
+            }, "post").then(res => {
+               console.log("res........................,",res)  
+
+        })
     },
        //转二维码
       qrCode (url) {
